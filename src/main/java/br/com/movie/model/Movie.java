@@ -3,10 +3,9 @@ package br.com.movie.model;
 import br.com.movie.model.enums.Category;
 import br.com.movie.model.enums.Language;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import static javax.persistence.CascadeType.REFRESH;
 
 @Entity
 public class Movie {
@@ -19,10 +18,12 @@ public class Movie {
 
     private String synopsis;
 
+    @ManyToOne(cascade = REFRESH)
     private Category category;
 
     private int ageGroup;
 
+    @ManyToOne(cascade = REFRESH)
     private Language language;
 
     private int duration;

@@ -1,9 +1,8 @@
 package br.com.movie.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import static javax.persistence.CascadeType.REFRESH;
 
 @Entity
 public class Armchair {
@@ -18,5 +17,6 @@ public class Armchair {
 
     private boolean vip;
 
+    @OneToOne(cascade = REFRESH)
     private Room room;
 }
