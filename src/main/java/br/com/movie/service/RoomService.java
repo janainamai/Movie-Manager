@@ -21,8 +21,8 @@ public class RoomService {
         return roomRepository.findAll();
     }
 
-    public Room findById(Integer id) {
-        return roomRepository.findById(id)
+    public Room findByName(String name) {
+        return roomRepository.findByName(name)
                 .orElseThrow(() -> new BadRequestException(ROOM_NOT_FOUND));
     }
 
