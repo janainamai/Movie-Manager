@@ -1,6 +1,6 @@
 **INTRODUÇÃO**
 
-Este sistema *Movie-Manager* está em desenvolvimento, seu objetivo principal é o aprendizado de alguns conteúdos:
+Este sistema *Movie-Manager* está em desenvolvimento, seu objetivo principal é a prática de alguns conteúdos aprendidos em 2021:
 
 - Java
 - Hibernate
