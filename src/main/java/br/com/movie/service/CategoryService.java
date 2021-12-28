@@ -21,6 +21,11 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
+    public Category findById(Integer id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException(CATEGORY_NOT_FOUND));
+    }
+
     public Category findByDescription(String description) {
         return categoryRepository.findByDescription(description.toUpperCase())
                 .orElseThrow(() -> new BadRequestException(CATEGORY_NOT_FOUND));
