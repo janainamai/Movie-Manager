@@ -1,6 +1,6 @@
 package br.com.movie.model;
 
-import br.com.movie.model.enums.PaymentType;
+import br.com.movie.model.enums.Payment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,5 +37,5 @@ public class Ticket {
     private Double paymentPrice;
 
     @ManyToOne(cascade = REFRESH)
-    private PaymentType paymentType;
+    private Payment paymentType;
 }
