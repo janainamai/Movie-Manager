@@ -24,7 +24,12 @@ public class LanguageController {
         return ResponseEntity.ok(languageService.list());
     }
 
-    @GetMapping("/{description}")
+    @GetMapping("/{id}")
+    public ResponseEntity<Language> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(languageService.findById(id));
+    }
+
+    @GetMapping("/description/{description}")
     public ResponseEntity<Language> findByDescription(@PathVariable String description) {
         return ResponseEntity.ok(languageService.findByDescription(description));
     }

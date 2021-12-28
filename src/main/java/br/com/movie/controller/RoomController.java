@@ -24,7 +24,12 @@ public class RoomController {
         return ResponseEntity.ok(roomService.list());
     }
 
-    @GetMapping(path = "/{name}")
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Room> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(roomService.findById(id));
+    }
+
+    @GetMapping(path = "/name/{name}")
     public ResponseEntity<Room> findByName(@PathVariable String name) {
         return ResponseEntity.ok(roomService.findByName(name));
     }

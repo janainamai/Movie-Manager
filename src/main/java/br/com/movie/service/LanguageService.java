@@ -21,6 +21,11 @@ public class LanguageService {
         return languageRepository.findAll();
     }
 
+    public Language findById(Integer id) {
+        return languageRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException(LANGUAGE_NOT_FOUND));
+    }
+
     public Language findByDescription(String description) {
         return languageRepository.findByDescription(description.toUpperCase())
                 .orElseThrow(() -> new BadRequestException(LANGUAGE_NOT_FOUND));

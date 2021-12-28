@@ -24,7 +24,12 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.list());
     }
 
-    @GetMapping("/{description}")
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(categoryService.findById(id));
+    }
+
+    @GetMapping("/description/{description}")
     public ResponseEntity<Category> findByDescription(@PathVariable String description) {
         return ResponseEntity.ok(categoryService.findByDescription(description));
     }
