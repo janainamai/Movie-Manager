@@ -41,6 +41,7 @@ public class CategoryService {
         Optional<Category> optional = categoryRepository.findById(category.getId());
 
         if (optional.isPresent()) {
+            category.setDescription(category.getDescription().toUpperCase());
             return categoryRepository.save(category);
         } else {
             throw new BadRequestException(CATEGORY_NOT_FOUND);
