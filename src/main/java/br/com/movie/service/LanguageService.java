@@ -43,11 +43,17 @@ public class LanguageService {
     }
 
     public Language replace(Language language) {
-        Optional<Language> optional = languageRepository.findById(language.getId());
-
-        if (optional.isPresent()) {
+        if (languageRepository.existsById(language.getId())) {
             language.setDescription(language.getDescription().toUpperCase());
             return this.save(language);
+        } else {
+            throw new BadRequestException(LANGUAGE_NOT_FOUND);
+        }
+    }
+
+    public void delete(Integer id) {
+        if (languageRepository.existsById(id)) {
+            languageRepository.deleteById(id);
         } else {
             throw new BadRequestException(LANGUAGE_NOT_FOUND);
         }
