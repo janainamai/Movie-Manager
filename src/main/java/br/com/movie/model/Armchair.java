@@ -24,6 +24,6 @@ public class Armchair {
 
     private boolean vip;
 
-    @OneToOne(cascade = REFRESH)
+    @ManyToOne(cascade = REFRESH)
     private Room room;
 }

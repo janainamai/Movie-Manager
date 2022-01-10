@@ -27,16 +27,17 @@ public class RoomService {
     }
 
     public Room findByName(String name) {
-        return roomRepository.findByName(name)
+        return roomRepository.findByName(name.toUpperCase())
                 .orElseThrow(() -> new BadRequestException(ROOM_NOT_FOUND));
     }
 
     public Room save(Room room) {
-        Optional<Room> optional = roomRepository.findByName(room.getName());
+        Optional<Room> optional = roomRepository.findByName(room.getName().toUpperCase());
         if (optional.isPresent()) {
             throw new BadRequestException("There is already a room with this name");
         }
 
+        room.setName(room.getName().toUpperCase());
         return roomRepository.save(room);
     }
 
@@ -44,7 +45,7 @@ public class RoomService {
         Optional<Room> optional = roomRepository.findById(room.getId());
 
         if (optional.isPresent()) {
-            return roomRepository.save(room);
+            return this.save(room);
         } else {
             throw new BadRequestException(ROOM_NOT_FOUND);
         }

@@ -29,8 +29,8 @@ public class PaymentController {
         return ResponseEntity.ok(paymentService.findById(id));
     }
 
-    @GetMapping("/description/{description}")
-    public ResponseEntity<Payment> findByDescription(@PathVariable String description) {
+    @GetMapping("/find")
+    public ResponseEntity<Payment> findByDescription(@RequestParam String description) {
         return ResponseEntity.ok(paymentService.findByDescription(description));
     }
 

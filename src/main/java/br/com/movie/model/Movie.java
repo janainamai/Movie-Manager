@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 import static javax.persistence.CascadeType.REFRESH;
 
 @Entity
@@ -24,8 +26,8 @@ public class Movie {
 
     private String synopsis;
 
-    @ManyToOne(cascade = REFRESH)
-    private Category category;
+    @ManyToMany(cascade = REFRESH)
+    private List<Category> category;
 
     private int ageGroup;
 

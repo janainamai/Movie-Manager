@@ -32,7 +32,7 @@ public class CategoryService {
     }
 
     public Category save(Category category) {
-        Optional<Category> optional = categoryRepository.findByDescription(category.getDescription());
+        Optional<Category> optional = categoryRepository.findByDescription(category.getDescription().toUpperCase());
 
         if (optional.isPresent()) {
             throw new BadRequestException("There is already a category with this description");
@@ -47,7 +47,7 @@ public class CategoryService {
 
         if (optional.isPresent()) {
             category.setDescription(category.getDescription().toUpperCase());
-            return categoryRepository.save(category);
+            return this.save(category);
         } else {
             throw new BadRequestException(CATEGORY_NOT_FOUND);
         }

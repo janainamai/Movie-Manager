@@ -29,8 +29,8 @@ public class RoomController {
         return ResponseEntity.ok(roomService.findById(id));
     }
 
-    @GetMapping(path = "/name/{name}")
-    public ResponseEntity<Room> findByName(@PathVariable String name) {
+    @GetMapping(path = "/find")
+    public ResponseEntity<Room> findByName(@RequestParam String name) {
         return ResponseEntity.ok(roomService.findByName(name));
     }
 

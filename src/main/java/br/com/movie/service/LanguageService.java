@@ -47,7 +47,7 @@ public class LanguageService {
 
         if (optional.isPresent()) {
             language.setDescription(language.getDescription().toUpperCase());
-            return languageRepository.save(language);
+            return this.save(language);
         } else {
             throw new BadRequestException(LANGUAGE_NOT_FOUND);
         }
