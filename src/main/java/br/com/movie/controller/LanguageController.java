@@ -43,4 +43,10 @@ public class LanguageController {
     public ResponseEntity<Language> replace(@RequestBody @Valid LanguagePut language) {
         return ResponseEntity.ok(languageService.replace(language.toEntity()));
     }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        languageService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
