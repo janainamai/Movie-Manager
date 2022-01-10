@@ -32,7 +32,7 @@ public class PaymentService {
     }
 
     public Payment save(Payment payment) {
-        Optional<Payment> optional = paymentRepository.findByDescription(payment.getDescription());
+        Optional<Payment> optional = paymentRepository.findByDescription(payment.getDescription().toUpperCase());
 
         if (optional.isPresent()) {
             throw new BadRequestException("There is already a payment with this description");
@@ -47,7 +47,7 @@ public class PaymentService {
 
         if (optional.isPresent()) {
             payment.setDescription(payment.getDescription().toUpperCase());
-            return paymentRepository.save(payment);
+            return this.save(payment);
         } else {
             throw new BadRequestException(PAYMENT_NOT_FOUND);
         }
