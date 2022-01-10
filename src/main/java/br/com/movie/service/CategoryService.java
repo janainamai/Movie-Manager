@@ -43,11 +43,17 @@ public class CategoryService {
     }
 
     public Category replace(Category category) {
-        Optional<Category> optional = categoryRepository.findById(category.getId());
-
-        if (optional.isPresent()) {
+        if (categoryRepository.existsById(category.getId())) {
             category.setDescription(category.getDescription().toUpperCase());
             return this.save(category);
+        } else {
+            throw new BadRequestException(CATEGORY_NOT_FOUND);
+        }
+    }
+
+    public void delete(Integer id) {
+        if (categoryRepository.existsById(id)) {
+            categoryRepository.deleteById(id);
         } else {
             throw new BadRequestException(CATEGORY_NOT_FOUND);
         }

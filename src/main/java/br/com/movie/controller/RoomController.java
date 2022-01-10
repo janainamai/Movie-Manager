@@ -43,4 +43,10 @@ public class RoomController {
     public ResponseEntity<Room> replace(@RequestBody @Valid RoomPut room) {
         return ResponseEntity.ok(roomService.replace(room.toEntity()));
     }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        roomService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -43,11 +43,17 @@ public class PaymentService {
     }
 
     public Payment replace(Payment payment) {
-        Optional<Payment> optional = paymentRepository.findById(payment.getId());
-
-        if (optional.isPresent()) {
+        if (paymentRepository.existsById(payment.getId())) {
             payment.setDescription(payment.getDescription().toUpperCase());
             return this.save(payment);
+        } else {
+            throw new BadRequestException(PAYMENT_NOT_FOUND);
+        }
+    }
+
+    public void delete(Integer id) {
+        if (paymentRepository.existsById(id)) {
+            paymentRepository.deleteById(id);
         } else {
             throw new BadRequestException(PAYMENT_NOT_FOUND);
         }

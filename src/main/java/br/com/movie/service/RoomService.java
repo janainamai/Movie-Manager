@@ -42,10 +42,16 @@ public class RoomService {
     }
 
     public Room replace(Room room) {
-        Optional<Room> optional = roomRepository.findById(room.getId());
-
-        if (optional.isPresent()) {
+        if (roomRepository.existsById(room.getId())) {
             return this.save(room);
+        } else {
+            throw new BadRequestException(ROOM_NOT_FOUND);
+        }
+    }
+
+    public void delete(Integer id) {
+        if (roomRepository.existsById(id)) {
+            roomRepository.deleteById(id);
         } else {
             throw new BadRequestException(ROOM_NOT_FOUND);
         }
