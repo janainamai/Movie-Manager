@@ -1,6 +1,6 @@
 package br.com.movie.model.dto;
 
-import br.com.movie.model.enums.Category;
+import br.com.movie.model.Category;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;

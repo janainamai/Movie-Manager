@@ -2,7 +2,7 @@ package br.com.movie.controller;
 
 import br.com.movie.model.dto.PaymentPost;
 import br.com.movie.model.dto.PaymentPut;
-import br.com.movie.model.enums.Payment;
+import br.com.movie.model.Payment;
 import br.com.movie.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

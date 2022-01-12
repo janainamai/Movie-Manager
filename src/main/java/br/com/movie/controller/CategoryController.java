@@ -2,7 +2,7 @@ package br.com.movie.controller;
 
 import br.com.movie.model.dto.CategoryPost;
 import br.com.movie.model.dto.CategoryPut;
-import br.com.movie.model.enums.Category;
+import br.com.movie.model.Category;
 import br.com.movie.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
