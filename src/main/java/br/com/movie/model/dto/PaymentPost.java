@@ -1,6 +1,6 @@
 package br.com.movie.model.dto;
 
-import br.com.movie.model.enums.Payment;
+import br.com.movie.model.Payment;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;

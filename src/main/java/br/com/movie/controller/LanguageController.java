@@ -2,7 +2,7 @@ package br.com.movie.controller;
 
 import br.com.movie.model.dto.LanguagePost;
 import br.com.movie.model.dto.LanguagePut;
-import br.com.movie.model.enums.Language;
+import br.com.movie.model.Language;
 import br.com.movie.service.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

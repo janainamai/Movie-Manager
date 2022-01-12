@@ -1,6 +1,5 @@
 package br.com.movie.model;
 
-import br.com.movie.model.enums.Payment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

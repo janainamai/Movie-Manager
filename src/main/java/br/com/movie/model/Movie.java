@@ -1,7 +1,6 @@
 package br.com.movie.model;
 
-import br.com.movie.model.enums.Category;
-import br.com.movie.model.enums.Language;
+import br.com.movie.model.enums.MovieType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,5 +34,7 @@ public class Movie {
     private Language language;
 
     private int duration;
+
+    private MovieType movieType;
 
 }

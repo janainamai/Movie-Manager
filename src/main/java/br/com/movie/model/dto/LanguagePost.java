@@ -1,6 +1,6 @@
 package br.com.movie.model.dto;
 
-import br.com.movie.model.enums.Language;
+import br.com.movie.model.Language;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;

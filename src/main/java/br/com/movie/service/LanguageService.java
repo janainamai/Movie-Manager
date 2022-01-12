@@ -1,7 +1,7 @@
 package br.com.movie.service;
 
 import br.com.movie.exception.BadRequestException;
-import br.com.movie.model.enums.Language;
+import br.com.movie.model.Language;
 import br.com.movie.repository.LanguageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
