@@ -18,6 +18,10 @@ public class TicketPriceService {
     @Autowired
     private TicketPriceRepository ticketPriceRepository;
 
+    public List<TicketPrice> list() {
+        return ticketPriceRepository.findAll();
+    }
+
     public Double getCurrentPrice() {
         if (getCurrentTicketPrice().isPresent()) {
             return getCurrentTicketPrice().get().getPrice();

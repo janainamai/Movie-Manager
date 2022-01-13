@@ -27,24 +27,22 @@ public class CategoryService {
     }
 
     public Category findByDescription(String description) {
-        return categoryRepository.findByDescription(description.toUpperCase())
+        return categoryRepository.findByDescriptionIgnoreCase(description)
                 .orElseThrow(() -> new BadRequestException(CATEGORY_NOT_FOUND));
     }
 
     public Category save(Category category) {
-        Optional<Category> optional = categoryRepository.findByDescription(category.getDescription().toUpperCase());
+        Optional<Category> optional = categoryRepository.findByDescriptionIgnoreCase(category.getDescription());
 
         if (optional.isPresent()) {
             throw new BadRequestException("There is already a category with this description");
         }
 
-        category.setDescription(category.getDescription().toUpperCase());
         return categoryRepository.save(category);
     }
 
     public Category replace(Category category) {
         if (categoryRepository.existsById(category.getId())) {
-            category.setDescription(category.getDescription().toUpperCase());
             return this.save(category);
         } else {
             throw new BadRequestException(CATEGORY_NOT_FOUND);

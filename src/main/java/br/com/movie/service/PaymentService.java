@@ -27,24 +27,22 @@ public class PaymentService {
     }
 
     public Payment findByDescription(String description) {
-        return paymentRepository.findByDescription(description.toUpperCase())
+        return paymentRepository.findByDescriptionIgnoreCase(description)
                 .orElseThrow(() -> new BadRequestException(PAYMENT_NOT_FOUND));
     }
 
     public Payment save(Payment payment) {
-        Optional<Payment> optional = paymentRepository.findByDescription(payment.getDescription().toUpperCase());
+        Optional<Payment> optional = paymentRepository.findByDescriptionIgnoreCase(payment.getDescription());
 
         if (optional.isPresent()) {
             throw new BadRequestException("There is already a payment with this description");
         }
 
-        payment.setDescription(payment.getDescription().toUpperCase());
         return paymentRepository.save(payment);
     }
 
     public Payment replace(Payment payment) {
         if (paymentRepository.existsById(payment.getId())) {
-            payment.setDescription(payment.getDescription().toUpperCase());
             return this.save(payment);
         } else {
             throw new BadRequestException(PAYMENT_NOT_FOUND);

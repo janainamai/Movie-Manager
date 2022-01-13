@@ -39,4 +39,6 @@ public class Movie {
 
     private MovieType movieType;
 
+    private boolean inTheaters;
+
 }
