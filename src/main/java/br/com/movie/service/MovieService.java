@@ -6,19 +6,43 @@ import br.com.movie.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class MovieService {
 
+    private static final String MOVIE_NOT_FOUND = "Movie not found";
+
     @Autowired
     private MovieRepository movieRepository;
+
+    public List<Movie> list() {
+        return movieRepository.findAll();
+    }
+
+    public List<Movie> findByTitle(String title) {
+        List<Movie> list = movieRepository.findByTitleIgnoreCase(title);
+
+        if (list.isEmpty()) {
+            throw new BadRequestException(MOVIE_NOT_FOUND);
+        } else {
+            return list;
+        }
+    }
 
     public Movie save(Movie movie) {
         if (!valid(movie)) {
             throw new BadRequestException("A movie with this name, language and type already exists");
         }
         return movieRepository.save(movie);
+    }
+
+    public Movie replace(Movie movie) {
+        if(movieRepository.existsById(movie.getId())) {
+            return this.save(movie);
+        } else {
+            throw new BadRequestException(MOVIE_NOT_FOUND);
+        }
     }
 
     /**
@@ -28,12 +52,14 @@ public class MovieService {
      * @return false if already exists and true if not
      */
     private boolean valid(Movie movie) {
-        Optional<Movie> optional = movieRepository.findByTitle(movie.getTitle());
+        List<Movie> list = movieRepository.findByTitleIgnoreCase(movie.getTitle());
 
-        if (optional.isPresent()) {
-            Movie mov = optional.get();
-            if (movie.getLanguage().equals(mov.getLanguage()) && movie.getMovieType().equals(mov.getMovieType())) {
-                return false;
+        if (!list.isEmpty()) {
+            for (Movie mov : list) {
+                if (movie.getLanguage().equals(mov.getLanguage())
+                        && movie.getMovieType().equals(mov.getMovieType())) {
+                    return false;
+                }
             }
         }
         return true;

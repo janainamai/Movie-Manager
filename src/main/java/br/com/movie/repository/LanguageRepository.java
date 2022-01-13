@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface LanguageRepository extends JpaRepository<Language, Integer> {
 
-    Optional<Language> findByDescription(String description);
+    Optional<Language> findByDescriptionIgnoreCase(String description);
 
 }

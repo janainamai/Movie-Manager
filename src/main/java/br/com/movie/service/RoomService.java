@@ -27,17 +27,17 @@ public class RoomService {
     }
 
     public Room findByName(String name) {
-        return roomRepository.findByName(name.toUpperCase())
+        return roomRepository.findByNameIgnoreCase(name)
                 .orElseThrow(() -> new BadRequestException(ROOM_NOT_FOUND));
     }
 
     public Room save(Room room) {
-        Optional<Room> optional = roomRepository.findByName(room.getName().toUpperCase());
+        Optional<Room> optional = roomRepository.findByNameIgnoreCase(room.getName());
         if (optional.isPresent()) {
             throw new BadRequestException("There is already a room with this name");
         }
 
-        room.setName(room.getName().toUpperCase());
+        room.setName(room.getName());
         return roomRepository.save(room);
     }
 

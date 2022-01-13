@@ -2,15 +2,15 @@ package br.com.movie.controller;
 
 import br.com.movie.model.Movie;
 import br.com.movie.model.dto.MoviePost;
+import br.com.movie.model.dto.MoviePut;
 import br.com.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/movie")
@@ -19,9 +19,24 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+    @GetMapping
+    public ResponseEntity<List<Movie>> list() {
+        return ResponseEntity.ok(movieService.list());
+    }
+
+    @GetMapping(path = "/{title}")
+    public ResponseEntity<List<Movie>> findByTitle(@PathVariable String title) {
+        return ResponseEntity.ok(movieService.findByTitle(title));
+    }
+
     @PostMapping
     public ResponseEntity<Movie> save(@RequestBody @Valid MoviePost movie) {
-        return ResponseEntity.ok(movieService.save(movie.toEntity()));
+        return new ResponseEntity<>(movieService.save(movie.toEntity()), HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<Movie> replace(@RequestBody @Valid MoviePut movie) {
+        return ResponseEntity.ok(movieService.replace(movie.toEntity()));
     }
 
 }

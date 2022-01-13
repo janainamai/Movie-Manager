@@ -27,24 +27,22 @@ public class LanguageService {
     }
 
     public Language findByDescription(String description) {
-        return languageRepository.findByDescription(description.toUpperCase())
+        return languageRepository.findByDescriptionIgnoreCase(description)
                 .orElseThrow(() -> new BadRequestException(LANGUAGE_NOT_FOUND));
     }
 
     public Language save(Language language) {
-        Optional<Language> optional = languageRepository.findByDescription(language.getDescription().toUpperCase());
+        Optional<Language> optional = languageRepository.findByDescriptionIgnoreCase(language.getDescription());
 
         if (optional.isPresent()) {
             throw new BadRequestException("There is already a language with this description");
         }
 
-        language.setDescription(language.getDescription().toUpperCase());
         return languageRepository.save(language);
     }
 
     public Language replace(Language language) {
         if (languageRepository.existsById(language.getId())) {
-            language.setDescription(language.getDescription().toUpperCase());
             return this.save(language);
         } else {
             throw new BadRequestException(LANGUAGE_NOT_FOUND);
