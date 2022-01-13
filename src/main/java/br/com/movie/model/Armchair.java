@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import static javax.persistence.CascadeType.REFRESH;
-
 @Entity
 @Data
 @AllArgsConstructor
@@ -24,6 +22,4 @@ public class Armchair {
 
     private boolean vip;
 
-    @ManyToOne(cascade = REFRESH)
-    private Room room;
 }
