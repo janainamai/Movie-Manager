@@ -54,15 +54,14 @@ public class MovieService {
     private boolean validToSave(Movie movie) {
         List<Movie> list = movieRepository.findByTitleIgnoreCase(movie.getTitle());
 
-        if (!list.isEmpty()) {
-            for (Movie mov : list) {
-                if (movie.getLanguage().equals(mov.getLanguage())
-                        && movie.getMovieType().equals(mov.getMovieType())) {
-                    return false;
-                }
+        if (list.isEmpty()) {
+            return true;
+        } else {
+            if (hasSameLanguageAndMovieType(movie, list)) {
+                return false;
             }
+            return true;
         }
-        return true;
     }
 
     /**
@@ -72,17 +71,29 @@ public class MovieService {
      * @return false if already exists and true if not
      */
     private boolean validToReplace(Movie movie) {
-        List<Movie> list = movieRepository.findByTitleIgnoreCase(movie.getTitle());
+        if (movieRepository.existsById(movie.getId())) {
+            List<Movie> list = movieRepository.findByTitleIgnoreCase(movie.getTitle());
 
-        if (!list.isEmpty()) {
-            for (Movie data : list) {
-                if (movie.getLanguage().equals(data.getLanguage())
-                        && movie.getMovieType().equals(data.getMovieType())
-                        && movie.getId() != data.getId()) {
-                    return false;
+            if (list.isEmpty()) {
+                return true;
+            } else {
+                for (Movie data : list) {
+                    if (hasSameLanguageAndMovieType(movie, list) && movie.getId() != data.getId()) {
+                        return false;
+                    }
                 }
             }
         }
-        return true;
+        return false;
+    }
+
+    private boolean hasSameLanguageAndMovieType(Movie movie, List<Movie> list) {
+        for (Movie mov : list) {
+            if (movie.getLanguage().equals(mov.getLanguage())
+                    && movie.getMovieType().equals(mov.getMovieType())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
