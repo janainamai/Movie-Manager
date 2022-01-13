@@ -2,6 +2,7 @@ package br.com.movie.model;
 
 import br.com.movie.model.enums.MovieType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import static javax.persistence.CascadeType.REFRESH;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Movie {
 
     @Id
