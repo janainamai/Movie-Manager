@@ -45,6 +45,14 @@ public class MovieService {
         }
     }
 
+    public void delete(Integer id) {
+        if (movieRepository.existsById(id)) {
+            movieRepository.deleteById(id);
+        } else {
+            throw new BadRequestException(MOVIE_NOT_FOUND);
+        }
+    }
+
     /**
      * Validates if a movie with this title, language and type already exists.
      *
