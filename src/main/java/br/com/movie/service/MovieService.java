@@ -38,7 +38,7 @@ public class MovieService {
     }
 
     public Movie replace(Movie movie) {
-        if (movieRepository.existsById(movie.getId()) && validToReplace(movie)) {
+        if (validToReplace(movie)) {
             return movieRepository.save(movie);
         } else {
             throw new BadRequestException(MOVIE_NOT_FOUND);
