@@ -72,7 +72,7 @@ quanto ao idioma em que será exibido o filme.
 ```sql
 Table: TICKET PRICE
 
-Description: O preço do ticket serve para ser considerado em cada venda. Sempre
+Description: O 'price' do ticket serve para ser considerado em cada venda. Sempre
 será considerado o preço que não possui data 'finished', pois isso significa que o 
 preço está vigente. Quando o preço é alterado, o preço vigente recebe nova data 
 'finished' e o novo preço recebe nova data 'created' igual a data do dia em que 
@@ -91,9 +91,8 @@ a alteração foi realizada.
 ```sql
 Table: MOVIE
 
-Description: O filme possui características de título, sinopse, categoria,
-idade mínima requerida, idioma, duração em minutos, tipo do filme e indicativo
-que informa se o filme está em algum cartaz ativo.
+Description: O filme possui características de 'title', 'synopsis', 'category',
+'minimumAgeRequired', 'language', 'durationMinutes', 'type' e 'isOnActivePoster'.
 
 +--------------------+-----------+------+-----+
 | Field              | Type      | Null | Key |
@@ -113,8 +112,8 @@ que informa se o filme está em algum cartaz ativo.
 ```sql
 Table: DISCOUNT
 
-Description: O desconto possui uma descrição para que o usuário entenda em que 
-ocasião ele pode ser aplicado, e uma porcentagem que será utilizada para reduzir
+Description: O desconto possui uma 'description' para que o usuário entenda em que 
+ocasião ele pode ser aplicado, e uma 'percentage' que será utilizada para reduzir
 o preço do ingresso de um filme.
 
 +-------------+---------+------+-----+
@@ -129,7 +128,7 @@ o preço do ingresso de um filme.
 ```sql
 Table: CATEGORY
 
-Description: A categoria possui descrição para descrever o tipo da história do 
+Description: A categoria possui 'description' para descrever o tipo da história do 
 filme, podendo ser inserida no cartaz a fim de trazer mais detalhes sobre o 
 filme para o cliente.
 
@@ -144,12 +143,12 @@ filme para o cliente.
 ```sql
 Table: DAY OF WEEK DISCOUNT
 
-Description: se refere a um desconto fixo para cada dia da semana. 
-A tabela recebe uma carga inicial com todos os dias da semana cadastrados 
-recebendo porcentagem zero. Sempre que um ingresso é vendido, sera aplicado 
-à ele uma porcentagem de desconto. Caso não exista nenhum desconto aplicado 
-na venda, vale o DayOfWeekDiscount. Caso exista um Discount aplicado, vale 
-aquele que tiver maior porcentagem, nunca a soma de ambos.
+Description: se refere a um desconto fixo para 'dayOfWeek'. A tabela recebe
+uma carga inicial com todos os dias da semana cadastrados recebendo 'percentage'
+igual a zero. Sempre que um ingresso é vendido, sera aplicado à ele uma porcentagem
+de desconto. Caso não exista nenhum desconto aplicado na venda, vale o 'DayOfWeekDiscount'. 
+Caso exista um 'Discount' aplicado, vale aquele que tiver maior porcentagem, nunca 
+a soma de ambos.
 
 +------------+---------+------+-----+
 | Field      | Type    | Null | Key |
