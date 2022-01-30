@@ -22,17 +22,17 @@ public class MoviePost implements ConvertDTO<Movie>{
     @NotEmpty(message = "Category cannot be null")
     private List<Category> category;
 
-    @NotNull(message = "Age group cannot be null")
-    private Integer ageGroup;
+    @NotNull(message = "MinimumAgeRequired cannot be null")
+    private Integer minimumAgeRequired;
 
     @NotNull(message = "Language cannot be null")
     private Language language;
 
-    @NotNull(message = "Duration cannot be null")
-    private Integer duration;
+    @NotNull(message = "DurationMinutes cannot be null")
+    private Integer durationMinutes;
 
-    @NotNull(message = "Movie type cannot be null")
-    private MovieType movieType;
+    @NotNull(message = "Type cannot be null")
+    private MovieType type;
 
     @Override
     public Movie toEntity() {
@@ -40,10 +40,10 @@ public class MoviePost implements ConvertDTO<Movie>{
                 .title(this.title)
                 .synopsis(this.synopsis)
                 .category(this.category)
-                .ageGroup(this.ageGroup)
+                .minimumAgeRequired(this.minimumAgeRequired)
                 .language(this.language)
-                .duration(this.duration)
-                .movieType(this.movieType)
+                .durationMinutes(this.durationMinutes)
+                .type(this.type)
                 .build();
     }
 }

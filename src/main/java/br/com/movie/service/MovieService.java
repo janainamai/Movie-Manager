@@ -98,10 +98,12 @@ public class MovieService {
     private boolean hasSameLanguageAndMovieType(Movie movie, List<Movie> list) {
         for (Movie mov : list) {
             if (movie.getLanguage().equals(mov.getLanguage())
-                    && movie.getMovieType().equals(mov.getMovieType())) {
+                    && movie.getType().equals(mov.getType())) {
                 return true;
             }
         }
         return false;
     }
+
+    //TODO método que altera os dados isOnActivePoster
 }

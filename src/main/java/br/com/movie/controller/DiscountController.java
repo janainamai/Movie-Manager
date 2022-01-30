@@ -1,9 +1,9 @@
 package br.com.movie.controller;
 
-import br.com.movie.model.DiscountType;
-import br.com.movie.model.dto.DiscountTypePost;
-import br.com.movie.model.dto.DiscountTypePut;
-import br.com.movie.service.DiscountTypeService;
+import br.com.movie.model.Discount;
+import br.com.movie.model.dto.DiscountPost;
+import br.com.movie.model.dto.DiscountPut;
+import br.com.movie.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,34 +14,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/discountType")
-public class DiscountTypeController {
+public class DiscountController {
 
     @Autowired
-    private DiscountTypeService service;
+    private DiscountService service;
 
     @GetMapping
-    public ResponseEntity<List<DiscountType>> list() {
+    public ResponseEntity<List<Discount>> list() {
         return ResponseEntity.ok(service.list());
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<DiscountType> findById(@PathVariable Integer id) {
+    public ResponseEntity<Discount> findById(@PathVariable Integer id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @GetMapping(path = "/find")
-    public ResponseEntity<DiscountType> findByDescription(@RequestParam String description) {
+    public ResponseEntity<Discount> findByDescription(@RequestParam String description) {
         return ResponseEntity.ok(service.findByDescription(description));
     }
 
     @PostMapping
-    public ResponseEntity<DiscountType> save(@RequestBody @Valid DiscountTypePost discountType) {
-        return new ResponseEntity<>(service.save(discountType.toEntity()), HttpStatus.CREATED);
+    public ResponseEntity<Discount> save(@RequestBody @Valid DiscountPost discount) {
+        return new ResponseEntity<>(service.save(discount.toEntity()), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<DiscountType> replace(@RequestBody @Valid DiscountTypePut discountType) {
-        return ResponseEntity.ok(service.replace(discountType.toEntity()));
+    public ResponseEntity<Discount> replace(@RequestBody @Valid DiscountPut discount) {
+        return ResponseEntity.ok(service.replace(discount.toEntity()));
     }
 
     @DeleteMapping(path = "/{id}")

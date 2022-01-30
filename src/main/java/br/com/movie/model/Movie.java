@@ -30,15 +30,15 @@ public class Movie {
     @ManyToMany(cascade = REFRESH)
     private List<Category> category;
 
-    private Integer ageGroup;
+    private Integer minimumAgeRequired;
 
     @ManyToOne(cascade = REFRESH)
     private Language language;
 
-    private Integer duration;
+    private Integer durationMinutes;
 
-    private MovieType movieType;
+    private MovieType type;
 
-    private boolean inTheaters;
+    private boolean isOnActivePoster;
 
 }
