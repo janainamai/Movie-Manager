@@ -82,7 +82,7 @@ preço está vigente. Quando o preço é alterado, o preço vigente recebe nova 
 | id       | Integer   | NO   | PRI |
 | price    | Double    | NO   |     |
 | created  | LocalDate | NO   |     |
-| finished | LocalDate | NO   |     |
+| finished | LocalDate | YES   |     |
 +----------+-----------+---- -+-----+
 ```
 

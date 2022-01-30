@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/discountType")
+@RequestMapping("/discount")
 public class DiscountController {
 
     @Autowired
