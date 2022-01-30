@@ -1,13 +1,13 @@
 package br.com.movie.model.dto;
 
-import br.com.movie.model.DiscountType;
+import br.com.movie.model.Discount;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class DiscountTypePost implements ConvertDTO<DiscountType> {
+public class DiscountPost implements ConvertDTO<Discount> {
 
     @NotNull(message = "Description cannot be null")
     @NotEmpty(message = "Description cannot be empty")
@@ -17,8 +17,8 @@ public class DiscountTypePost implements ConvertDTO<DiscountType> {
     private Double percentage;
 
     @Override
-    public DiscountType toEntity() {
-        return DiscountType.builder()
+    public Discount toEntity() {
+        return Discount.builder()
                 .description(this.description)
                 .percentage(this.percentage)
                 .build();

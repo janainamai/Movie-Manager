@@ -43,9 +43,8 @@ quanto a localização onde ocorrerá o filme.
 ```sql
 Table: PAYMENT
 
-Description: O pagamento possui 'descrição' para esta seja inserida 
-no comprovante da compra do ingresso, este é entregue ao cliente pelo 
-vendedor. 
+Description: O pagamento possui 'descrição' para ser inserido no comprovante
+da compra do ingresso.
 
 +-------------+---------+------+-----+
 | Field       | Type    | Null | Key |
@@ -75,8 +74,7 @@ Table: TICKET PRICE
 Description: O 'price' do ticket serve para ser considerado em cada venda. Sempre
 será considerado o preço que não possui data 'finished', pois isso significa que o 
 preço está vigente. Quando o preço é alterado, o preço vigente recebe nova data 
-'finished' e o novo preço recebe nova data 'created' igual a data do dia em que 
-a alteração foi realizada.
+'finished' e o novo preço recebe a data de alteração no campo 'created'.
 
 +----------+-----------+------+-----+
 | Field    | Type      | Null | Key |

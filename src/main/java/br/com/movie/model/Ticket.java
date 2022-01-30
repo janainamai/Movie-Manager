@@ -29,7 +29,7 @@ public class Ticket {
     private Double price;
 
     @ManyToOne(cascade = REFRESH)
-    private DiscountType discountType;
+    private Discount discount;
 
     private Double discountPrice;
 
