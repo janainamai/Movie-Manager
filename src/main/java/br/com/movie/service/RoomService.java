@@ -37,7 +37,6 @@ public class RoomService {
             throw new BadRequestException("There is already a room with this name");
         }
 
-        room.setName(room.getName());
         return roomRepository.save(room);
     }
 
@@ -49,7 +48,7 @@ public class RoomService {
         }
     }
 
-    public void delete(Integer id) {
+    public void deleteById(Integer id) {
         if (roomRepository.existsById(id)) {
             roomRepository.deleteById(id);
         } else {
