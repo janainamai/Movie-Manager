@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.util.List;
 
 import static javax.persistence.CascadeType.REFRESH;
 
@@ -30,4 +31,6 @@ public class Poster {
     @ManyToOne(cascade = REFRESH)
     private Room room;
 
+    @OneToMany
+    private List<Armchair> armchairs;
 }
