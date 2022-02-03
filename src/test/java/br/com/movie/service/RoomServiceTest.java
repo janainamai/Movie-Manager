@@ -46,25 +46,6 @@ class RoomServiceTest {
     }
 
     @Test
-    void findById_ReturnsRoom_WhenToFind() {
-        Room green = createRoom("Green");
-        when(repository.findById(any())).thenReturn(of(green));
-
-        Room room = service.findById(1);
-        assertThat(room).isEqualTo(green);
-        verify(repository).findById(any());
-    }
-
-    @Test
-    void findById_ThrowsBadException_WhenNotFindAnyRoom() {
-        when(repository.findById(any())).thenReturn(empty());
-
-        assertThatExceptionOfType(BadRequestException.class)
-                .isThrownBy(() -> service.findById(1))
-                .withMessageContaining("Room not found");
-    }
-
-    @Test
     void findByName_ReturnsRoom_WhenToFind() {
         Room green = createRoom("Green");
         when(repository.findByNameIgnoreCase(any())).thenReturn(of(green));
