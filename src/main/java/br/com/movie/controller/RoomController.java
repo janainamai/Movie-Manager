@@ -50,4 +50,6 @@ public class RoomController {
     public ResponseEntity<Room> buildRoom(@RequestBody @Valid BuildRoom input) {
         return ResponseEntity.ok(roomService.buildRoom(input));
     }
+
+    // TODO pegar cadeiras
 }

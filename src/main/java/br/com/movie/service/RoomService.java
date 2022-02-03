@@ -5,7 +5,9 @@ import br.com.movie.model.Armchair;
 import br.com.movie.model.Room;
 import br.com.movie.model.Row;
 import br.com.movie.model.dto.BuildRoom;
+import br.com.movie.repository.ArmchairRepository;
 import br.com.movie.repository.RoomRepository;
+import br.com.movie.repository.RowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,12 @@ public class RoomService {
 
     @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    private RowRepository rowRepository;
+
+    @Autowired
+    private ArmchairRepository armchairRepository;
 
     public List<Room> list() {
         return roomRepository.findAll();
@@ -61,6 +69,7 @@ public class RoomService {
         Room room = input.getRoom();
         room.setRows(rows);
 
+        roomRepository.save(room);
         return room;
     }
 
@@ -78,8 +87,11 @@ public class RoomService {
             for (int a = 1; a <= armchairsPerRow; a++) {
                 Armchair armchair = new Armchair();
                 armchair.setCode(alphabet.get(r) + a);
+                armchairRepository.save(armchair);
+
                 row.getArmchairs().add(armchair);
             }
+            rowRepository.save(row);
             rows.add(row);
 
         }
