@@ -1,51 +1,47 @@
-**INTRODUÇÃO**
-<br>Este sistema *Movie-Manager* está em desenvolvimento, seu objetivo principal é a prática de alguns conteúdos aprendidos em 2021:
-<br><br>- Java
-<br> - Hibernate
-<br> - SpringBoot
-<br> - PostgreSQL
-<br> - loading...
-<br><br>**DOCUMENTAÇÃO**
-<br>Problema: Meu cliente quer abrir um cinema e precisa de um sistema que gerencie as salas, filmes em cartaz e venda de ingressos.
-<br><br>**Histórias de Usuário**
-<br>Criei essas histórias de usuário para que, a partir delas, conseguisse criar o sistema.
-<br><br>*Como administrador, quero:*
-<br> - Cadastrar uma sala de cinema informando características como: nome, quantidade de poltronas, tipos de filme suportados, poltronas vip.
-<br> - Cadastrar um novo perfil de usuário para acesso, informando: nome, login e senha.
-<br> - Cadastrar um filme informando: título, sinopse, categoria, faixa etária, idioma, duração.
-<br> - Vincular um filme a um cartaz informando: a data, a hora, e sala.
-<br> - Cadastrar as opções de pagamento.
-<br> - Cadastrar os dias da semana que recebem descontos fixos.
-<br> - Cadastrar tipos de desconto, exemplo: estudantes, idosos e crianças e a respectiva porcentagem.
-<br> - Cadastrar um valor padrão para o ingresso.
-<br> - Cadastrar categoria para setar no cadastro do filme.
-<br><br>*Como atendente de vendas, quero:*
-<br>- Gerar uma venda informando: cartaz, poltrona, cpf do cliente, valor do ingresso, valor do pagamento, desconto aplicado (opcional), data da venda.
-<br>- Imprimir o ingresso para o cliente.
-<br><br>**Projetando o sistema**
-<br>A partir das histórias de usuário, inicio a modelagem do banco de dados:
-<br><br>*Entidades*
+**ROOM** (sala de cinema), **ROW** (fileira de uma sala) e **ARMCHAIR** (poltrona de uma fileira)
 
-```sql
-Table: ROOM
+Cadastramos uma sala de cinema, informamos quantas fileiras
+existem e a quantidade de poltronas por fileira.
+Com essas informações a sala é criada, possuindo uma quantidade de fileiras 
+com suas respectivas poltronas.
 
-Description: A sala possui a informação 'nome' para orientar 
-quanto a localização onde ocorrerá o filme. 
+Após essa construção inicial da sala, é possível alterar a quantidade 
+de cadeiras de uma determinada fileira, determinando assim a planta exata
+da sala de cinema. 
 
+```sql 
+Room
 +-------+---------+------+-----+
 | Field | Type    | Null | Key |
 +-------+---------+------+-----+
 | id    | Integer | NO   | PRI |
 | name  | String  | NO   |     |
 +-------+---------+------+-----+
+
+Row
++---------+---------+------+-----+
+| Field   | Type    | Null | Key |
++---------+---------+------+-----+
+| id      | Integer | NO   | PRI |
+| letter  | String  | NO   |     |
++---------+---------+------+-----+
+
+Armchair
++-----------+---------+------+-----+
+| Field     | Type    | Null | Key |
++-----------+---------+------+-----+
+| id        | Integer | NO   | PRI |
+| number    | Integer | NO   |     |
+| available | boolean | NO   |     |
++-----------+---------+------+-----+
 ```
 
+<br>**LANGUAGE** (idioma)
+
+Utilizada para determinas o idioma de um filme.
+
 ```sql
-Table: PAYMENT
-
-Description: O pagamento possui 'descrição' para ser inserido no comprovante
-da compra do ingresso.
-
+Language
 +-------------+---------+------+-----+
 | Field       | Type    | Null | Key |
 +-------------+---------+-----+------+
@@ -54,12 +50,50 @@ da compra do ingresso.
 +-------------+---------+-----+------+
 ```
 
+<br>**CATEGORY** (categoria de filme)
+
+A categoria é um atributo do filme que informa o tipo do conteúdo
+apresentado.
+
 ```sql
-Table: LANGUAGE
+Category
++-------------+---------+------+-----+
+| Field       | Type    | Null | Key |
++-------------+---------+------+-----+
+| id          | Integer | NO   | PRI |
+| description | String  | NO   |     |
++-------------+---------+------+-----+
+```
 
-Description: A linguagem possui 'descrição' para que o cliente seja informado 
-quanto ao idioma em que será exibido o filme.
+<br>**MOVIE** (filme)
 
+O filme possui características de 'title', 'synopsis', 'category',
+'minimumAgeRequired', 'language', 'durationMinutes', 'type' e 'isOnActivePoster'
+que serão exibidas no cartaz quando este filme estiver disponível em uma sessão.
+
+```sql
+Movie
++--------------------+-----------+------+-----+
+| Field              | Type      | Null | Key |
++--------------------+-----------+------+-----+
+| id                 | Integer   | NO   | PRI |
+| title              | String    | NO   |     |
+| synopsis           | String    | NO   |     |
+| category           | Category  | NO   |     |
+| minimumAgeRequired | Integer   | NO   |     |
+| language           | Language  | NO   |     |
+| durationMinutes    | Long      | NO   |     |
+| type               | MovieType | NO   |     |
++--------------------+-----------+---- -+-----+
+```
+
+<br>**PAYMENT** (pagamento)
+
+Utilizado para cadastrar formas de pagamento que serão informados
+na emissão de um recibo da compra de um ingresso.
+
+```sql
+Payment
 +-------------+---------+------+-----+
 | Field       | Type    | Null | Key |
 +-------------+---------+-----+------+
@@ -68,14 +102,21 @@ quanto ao idioma em que será exibido o filme.
 +-------------+---------+-----+------+
 ```
 
+<br>**TICKET PRICE** (preço de um ingresso)
+
+O TicketPrice serve para mantermos um valor padrão da venda de ingresso.
+O valor dele sempre será utilizado como base e, de acordo com o desconto 
+aplicado, termos o preço final da venda.
+
+Sempre será considerado o TicketPrice que não possui data 'finished', pois
+isso significa que este é o preço vigente a ser utilizado como base para o
+cálculo da venda. 
+Quando informamos um novo preço a ser considerado, o preço vigente recebe 
+uma data 'finished' e o novo preço recebe a data 'created', tornando-se o 
+preço vigente.
+
 ```sql
-Table: TICKET PRICE
-
-Description: O 'price' do ticket serve para ser considerado em cada venda. Sempre
-será considerado o preço que não possui data 'finished', pois isso significa que o 
-preço está vigente. Quando o preço é alterado, o preço vigente recebe nova data 
-'finished' e o novo preço recebe a data de alteração no campo 'created'.
-
+TicketPrice
 +----------+-----------+------+-----+
 | Field    | Type      | Null | Key |
 +----------+-----------+------+-----+
@@ -86,68 +127,41 @@ preço está vigente. Quando o preço é alterado, o preço vigente recebe nova 
 +----------+-----------+---- -+-----+
 ```
 
-```sql
-Table: MOVIE
+<br>**DISCOUNT** (desconto)
 
-Description: O filme possui características de 'title', 'synopsis', 'category',
-'minimumAgeRequired', 'language', 'durationMinutes', 'type' e 'isOnActivePoster'.
+O desconto possui uma 'description' para que o usuário entenda em que ocasião 
+ele pode ser aplicado, e uma 'percentage' que será utilizada para reduzir o 
+preço do ingresso de um filme.
 
-+--------------------+-----------+------+-----+
-| Field              | Type      | Null | Key |
-+--------------------+-----------+------+-----+
-| id                 | Integer   | NO   | PRI |
-| title              | String    | NO   |     |
-| synopsis           | String    | NO   |     |
-| category           | Category  | NO   |     |
-| minimumAgeRequired | Integer   | NO   |     |
-| language           | Language  | NO   |     |
-| durationMinutes    | Language  | NO   |     |
-| type               | MovieType | NO   |     |
-| isOnActivePoster   | Boolean   | NO   |     |
-+--------------------+-----------+---- -+-----+
-```
+Se o desconto estiver desativado ele não poderá ser aplicado à uma venda.
 
 ```sql
-Table: DISCOUNT
-
-Description: O desconto possui uma 'description' para que o usuário entenda em que 
-ocasião ele pode ser aplicado, e uma 'percentage' que será utilizada para reduzir
-o preço do ingresso de um filme.
-
+Discount
 +-------------+---------+------+-----+
 | Field       | Type    | Null | Key |
 +-------------+---------+------+-----+
 | id          | Integer | NO   | PRI |
 | description | String  | NO   |     |
 | percentage  | Double  | NO   |     |
+| active      | boolean  | NO   |     |
 +-------------+---------+------+-----+
 ```
 
-```sql
-Table: CATEGORY
+<br>**DAY OF WEEK DISCOUNT** (desconto de dia da semana)
 
-Description: A categoria possui 'description' para descrever o tipo da história do 
-filme, podendo ser inserida no cartaz a fim de trazer mais detalhes sobre o 
-filme para o cliente.
-
-+-------------+---------+------+-----+
-| Field       | Type    | Null | Key |
-+-------------+---------+------+-----+
-| id          | Integer | NO   | PRI |
-| description | String  | NO   |     |
-+-------------+---------+------+-----+
-```
-
-```sql
-Table: DAY OF WEEK DISCOUNT
-
-Description: se refere a um desconto fixo para 'dayOfWeek'. A tabela recebe
+Esse desconto se refere a um desconto fixo para 'dayOfWeek'. A tabela recebe
 uma carga inicial com todos os dias da semana cadastrados recebendo 'percentage'
-igual a zero. Sempre que um ingresso é vendido, sera aplicado à ele uma porcentagem
-de desconto. Caso não exista nenhum desconto aplicado na venda, vale o 'DayOfWeekDiscount'. 
+igual a zero, podendo o usuário setar qual o desconto padrão que cada dia da 
+semana possui, se possuir. 
+
+Sempre que um ingresso é vendido, será aplicado à ele uma porcentagem de desconto. 
+Caso não exista nenhum desconto aplicado na venda, vale o 'DayOfWeekDiscount'.
+ 
 Caso exista um 'Discount' aplicado, vale aquele que tiver maior porcentagem, nunca 
 a soma de ambos.
 
+```sql
+DayOfWeekDiscount
 +------------+---------+------+-----+
 | Field      | Type    | Null | Key |
 +------------+---------+------+-----+

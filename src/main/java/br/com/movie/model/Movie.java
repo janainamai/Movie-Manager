@@ -39,6 +39,4 @@ public class Movie {
 
     private MovieType type;
 
-    private boolean isOnActivePoster;
-
 }
