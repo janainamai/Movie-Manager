@@ -46,7 +46,8 @@ public class RoomController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    public ResponseEntity<Room> buildRoom(BuildRoom input) {
+    @PostMapping("/build")
+    public ResponseEntity<Room> buildRoom(@RequestBody @Valid BuildRoom input) {
         return ResponseEntity.ok(roomService.buildRoom(input));
     }
 }
