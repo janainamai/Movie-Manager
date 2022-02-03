@@ -9,10 +9,7 @@ import br.com.movie.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,7 +55,6 @@ public class RoomService {
         }
     }
 
-    @Transactional
     public Room buildRoom(BuildRoom input) {
         List<Row> rows = generateRowsAndArmchair(input.getNumberOfRows(), input.getArmchairPerRow());
 
@@ -79,13 +75,13 @@ public class RoomService {
             row.setLetter(alphabet.get(r));
             row.setArmchairs(new ArrayList<>());
 
-            for (int a = 0; a < armchairsPerRow; a++) {
+            for (int a = 1; a <= armchairsPerRow; a++) {
                 Armchair armchair = new Armchair();
-                armchair.setCode(alphabet.get(r) + r++);
+                armchair.setCode(alphabet.get(r) + a);
                 row.getArmchairs().add(armchair);
             }
-
             rows.add(row);
+
         }
 
         return rows;
