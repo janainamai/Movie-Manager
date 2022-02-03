@@ -1,6 +1,7 @@
 package br.com.movie.controller;
 
 import br.com.movie.model.Room;
+import br.com.movie.model.dto.BuildRoom;
 import br.com.movie.model.dto.RoomPost;
 import br.com.movie.model.dto.RoomPut;
 import br.com.movie.service.RoomService;
@@ -43,5 +44,9 @@ public class RoomController {
     public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
         roomService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    public ResponseEntity<Room> buildRoom(BuildRoom input) {
+        return ResponseEntity.ok(roomService.buildRoom(input));
     }
 }
