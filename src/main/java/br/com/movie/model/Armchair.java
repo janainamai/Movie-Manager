@@ -14,12 +14,10 @@ public class Armchair {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    private String letter;
+    private Integer number;
 
-    private int number;
-
-    private boolean vip;
+    private boolean available;
 
 }

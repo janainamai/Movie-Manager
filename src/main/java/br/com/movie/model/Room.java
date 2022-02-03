@@ -22,5 +22,5 @@ public class Room {
     private String name;
 
     @OneToMany(cascade = CascadeType.REFRESH)
-    private List<Armchair> armchairs;
+    private List<Row> rows;
 }
