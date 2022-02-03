@@ -1,11 +1,18 @@
 package br.com.movie.service;
 
 import br.com.movie.exception.BadRequestException;
+import br.com.movie.model.Armchair;
 import br.com.movie.model.Room;
+import br.com.movie.model.Row;
+import br.com.movie.model.dto.BuildRoom;
 import br.com.movie.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,4 +58,36 @@ public class RoomService {
         }
     }
 
+    @Transactional
+    public Room buildRoom(BuildRoom input) {
+        List<Row> rows = generateRowsAndArmchair(input.getNumberOfRows(), input.getArmchairPerRow());
+
+        Room room = input.getRoom();
+        room.setRows(rows);
+
+        return room;
+    }
+
+    private List<Row> generateRowsAndArmchair(Integer numberOfRows, Integer armchairsPerRow) {
+        List<String> alphabet = List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
+                "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+
+        ArrayList<Row> rows = new ArrayList<>();
+
+        for (int r = 0; r < numberOfRows; r++) {
+            Row row = new Row();
+            row.setLetter(alphabet.get(r));
+            row.setArmchairs(new ArrayList<>());
+
+            for (int a = 0; a < armchairsPerRow; a++) {
+                Armchair armchair = new Armchair();
+                armchair.setCode(alphabet.get(r) + r++);
+                row.getArmchairs().add(armchair);
+            }
+
+            rows.add(row);
+        }
+
+        return rows;
+    }
 }

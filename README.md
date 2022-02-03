@@ -31,7 +31,7 @@ Armchair
 | Field     | Type    | Null | Key |
 +-----------+---------+------+-----+
 | id        | Integer | NO   | PRI |
-| number    | Integer | NO   |     |
+| code      | String  | NO   |     |
 | available | boolean | NO   |     |
 +-----------+---------+------+-----+
 ```
