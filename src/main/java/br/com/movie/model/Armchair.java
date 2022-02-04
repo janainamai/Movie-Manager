@@ -16,7 +16,9 @@ public class Armchair {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String code;
+    private String letter;
+
+    private Integer number;
 
     private boolean available;
 
