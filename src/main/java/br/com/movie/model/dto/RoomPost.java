@@ -1,20 +1,18 @@
 package br.com.movie.model.dto;
 
-import br.com.movie.model.Room;
 import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
-public class RoomPost implements ConvertDTO<Room> {
+public class RoomPost {
 
-    @NotEmpty(message = "Name cannot be null or empty")
+    @NotNull( message = "name cannot be null")
     private String name;
 
-    @Override
-    public Room toEntity() {
-        return Room.builder()
-                .name(this.name)
-                .build();
-    }
+    @NotNull(message = "numberOfRows cannot be null")
+    private Integer numberOfRows;
+
+    @NotNull(message = "armchairPerRow cannot be null")
+    private Integer armchairPerRow;
 }
