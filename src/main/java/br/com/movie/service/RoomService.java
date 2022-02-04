@@ -11,9 +11,12 @@ import br.com.movie.repository.RowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static br.com.movie.common.Constants.*;
 
 @Service
 public class RoomService {
@@ -63,39 +66,46 @@ public class RoomService {
         }
     }
 
+    @Transactional
     public Room buildRoom(BuildRoom input) {
-        List<Row> rows = generateRowsAndArmchair(input.getNumberOfRows(), input.getArmchairPerRow());
-
         Room room = input.getRoom();
-        room.setRows(rows);
+        List<Row> rows = generateRows(input.getNumberOfRows());
 
-        roomRepository.save(room);
+        for (Row row: rows) {
+            List<Armchair> chairs = generateChairs(input.getArmchairPerRow(), row.getLetter());
+            row.setArmchairs(chairs);
+        }
+
+        room.setRows(rows);
         return room;
     }
 
-    private List<Row> generateRowsAndArmchair(Integer numberOfRows, Integer armchairsPerRow) {
-        List<String> alphabet = List.of("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
-                "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
-
-        ArrayList<Row> rows = new ArrayList<>();
+    private List<Row> generateRows(Integer numberOfRows) {
+        List<Row> rows = new ArrayList<>();
 
         for (int r = 0; r < numberOfRows; r++) {
             Row row = new Row();
-            row.setLetter(alphabet.get(r));
-            row.setArmchairs(new ArrayList<>());
+            row.setLetter(ALPHABET.get(r));
 
-            for (int a = 1; a <= armchairsPerRow; a++) {
-                Armchair armchair = new Armchair();
-                armchair.setCode(alphabet.get(r) + a);
-                armchairRepository.save(armchair);
-
-                row.getArmchairs().add(armchair);
-            }
-            rowRepository.save(row);
             rows.add(row);
-
         }
 
+        rowRepository.saveAll(rows);
         return rows;
+    }
+
+    private List<Armchair> generateChairs(Integer numberOfArmchairs, String letter) {
+        List<Armchair> chairs = new ArrayList<>();
+
+        for (int a = 1; a <= numberOfArmchairs; a++) {
+            Armchair chair = new Armchair();
+            chair.setLetter(letter);
+            chair.setNumber(a);
+
+            chairs.add(chair);
+        }
+
+        armchairRepository.saveAll(chairs);
+        return chairs;
     }
 }
