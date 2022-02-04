@@ -4,19 +4,18 @@ import br.com.movie.exception.BadRequestException;
 import br.com.movie.model.Armchair;
 import br.com.movie.model.Room;
 import br.com.movie.model.Row;
-import br.com.movie.model.dto.BuildRoom;
+import br.com.movie.model.dto.RoomPost;
 import br.com.movie.repository.ArmchairRepository;
 import br.com.movie.repository.RoomRepository;
 import br.com.movie.repository.RowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.movie.common.Constants.*;
+import static br.com.movie.common.Constants.ALPHABET;
 
 @Service
 public class RoomService {
@@ -34,6 +33,11 @@ public class RoomService {
 
     public List<Room> list() {
         return roomRepository.findAll();
+    }
+
+    public Room findById(Integer id) {
+        return roomRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException(ROOM_NOT_FOUND));
     }
 
     public Room findByName(String name) {
@@ -66,9 +70,11 @@ public class RoomService {
         }
     }
 
-    @Transactional
-    public Room buildRoom(BuildRoom input) {
-        Room room = input.getRoom();
+    public Room buildRoom(RoomPost input) {
+        Room roomToSave = new Room();
+        roomToSave.setName(input.getName());
+        Room room = save(roomToSave);
+
         List<Row> rows = generateRows(input.getNumberOfRows());
 
         for (Row row: rows) {
@@ -77,6 +83,7 @@ public class RoomService {
         }
 
         room.setRows(rows);
+        roomRepository.save(room);
         return room;
     }
 
@@ -106,6 +113,18 @@ public class RoomService {
         }
 
         armchairRepository.saveAll(chairs);
+        return chairs;
+    }
+
+    public List<Armchair> getArmchairsByRoomId(Integer roomId) {
+        Room room = findById(roomId);
+
+        List<Armchair> chairs = new ArrayList<>();
+
+        for (Row row: room.getRows()) {
+            chairs.addAll(row.getArmchairs());
+        }
+
         return chairs;
     }
 }
