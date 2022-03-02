@@ -1,13 +1,11 @@
 **ROOM** (sala de cinema), **ROW** (fileira de uma sala) e **ARMCHAIR** (poltrona de uma fileira)
 
-Cadastramos uma sala de cinema, informamos quantas fileiras
-existem e a quantidade de poltronas por fileira.
-Com essas informações a sala é criada, possuindo uma quantidade de fileiras 
-com suas respectivas poltronas.
+Cadastramos uma sala de cinema, informamos quantas fileiras existem e a quantidade 
+de poltronas por fileira. Com essas informações a sala é criada, possuindo uma 
+quantidade de fileiras com suas respectivas poltronas.
 
-Após essa construção inicial da sala, é possível alterar a quantidade 
-de cadeiras de uma determinada fileira, determinando assim a planta exata
-da sala de cinema. 
+Após essa construção inicial da sala, é possível alterar a quantidade de cadeiras 
+de uma determinada fileira, determinando assim a planta exata da sala de cinema. 
 
 ```sql 
 Room
@@ -53,8 +51,7 @@ Language
 
 <br>**CATEGORY** (categoria de filme)
 
-A categoria é um atributo do filme que informa o tipo do conteúdo
-apresentado.
+A categoria é um atributo do filme que informa o tipo do conteúdo apresentado.
 
 ```sql
 Category
@@ -90,8 +87,8 @@ Movie
 
 <br>**PAYMENT** (pagamento)
 
-Utilizado para dscrever a forma de pagamento adotada durante a compra
-de um ingresso.
+Utilizado para dscrever a forma de pagamento adotada durante a compra de um 
+ingresso.
 
 ```sql
 Payment
