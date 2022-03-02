@@ -39,7 +39,7 @@ Armchair
 
 <br>**LANGUAGE** (idioma)
 
-Utilizada para determinas o idioma de um filme.
+Utilizada para determinar o idioma de um filme.
 
 ```sql
 Language
@@ -90,8 +90,8 @@ Movie
 
 <br>**PAYMENT** (pagamento)
 
-Utilizado para cadastrar formas de pagamento que serão informados
-na emissão de um recibo da compra de um ingresso.
+Utilizado para dscrever a forma de pagamento adotada durante a compra
+de um ingresso.
 
 ```sql
 Payment
@@ -107,14 +107,14 @@ Payment
 
 O TicketPrice serve para mantermos um valor padrão da venda de ingresso.
 O valor dele sempre será utilizado como base e, de acordo com o desconto 
-aplicado, termos o preço final da venda.
+aplicado, obtemos o preço final da venda.
 
 Sempre será considerado o TicketPrice que não possui data 'finished', pois
 isso significa que este é o preço vigente a ser utilizado como base para o
 cálculo da venda. 
-Quando informamos um novo preço a ser considerado, o preço vigente recebe 
-uma data 'finished' e o novo preço recebe a data 'created', tornando-se o 
-preço vigente.
+Quando informamos um novo TicketPrice, o preço que está vigente no momento
+recebe uma data 'finished' para que o TicketPrice que estamos cadastrando se
+torne o preço vigente.
 
 ```sql
 TicketPrice
@@ -124,17 +124,19 @@ TicketPrice
 | id       | Integer   | NO   | PRI |
 | price    | Double    | NO   |     |
 | created  | LocalDate | NO   |     |
-| finished | LocalDate | YES   |     |
+| finished | LocalDate | YES  |     |
 +----------+-----------+---- -+-----+
 ```
 
 <br>**DISCOUNT** (desconto)
 
-O desconto possui uma 'description' para que o usuário entenda em que ocasião 
-ele pode ser aplicado, e uma 'percentage' que será utilizada para reduzir o 
-preço do ingresso de um filme.
+O desconto é um benefício que pode ser utilizado para diminuir o valor de 
+um ingresso, ele é cadastrado pelo usuário e pode estar ou não ativado, por
+exemplo: desconto de dia das crianças.
 
-Se o desconto estiver desativado ele não poderá ser aplicado à uma venda.
+Como existem dois tipos de descontos no sistema (dayOfWeekDiscount e discount),
+vale o que tiver uma porcentagem maior. Não é permitido aplicar mais do que um
+desconto.
 
 ```sql
 Discount
@@ -150,16 +152,14 @@ Discount
 
 <br>**DAY OF WEEK DISCOUNT** (desconto de dia da semana)
 
-Esse desconto se refere a um desconto fixo para 'dayOfWeek'. A tabela recebe
-uma carga inicial com todos os dias da semana cadastrados recebendo 'percentage'
-igual a zero, podendo o usuário setar qual o desconto padrão que cada dia da 
-semana possui, se possuir. 
+Esse desconto é fixo e temos um para cada dia da semana. O sistema inicia com
+uma carga inicial com todos os dias da semana cadastrados recebendo porcentagem
+igual a zero, podendo o usuário setar qual o desconto que cada dia da semana 
+possuirá, caso desejado. 
 
-Sempre que um ingresso é vendido, será aplicado à ele uma porcentagem de desconto. 
-Caso não exista nenhum desconto aplicado na venda, vale o 'DayOfWeekDiscount'.
- 
-Caso exista um 'Discount' aplicado, vale aquele que tiver maior porcentagem, nunca 
-a soma de ambos.
+Como existem dois tipos de descontos no sistema (dayOfWeekDiscount e discount), 
+vale o que tiver uma porcentagem maior. Não é permitido aplicar mais do que um
+desconto.
 
 ```sql
 DayOfWeekDiscount
