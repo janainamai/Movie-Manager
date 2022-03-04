@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Row {
+public class Row implements Comparable<Row> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +24,8 @@ public class Row {
     @OneToMany(cascade = CascadeType.REFRESH)
     private List<Armchair> armchairs;
 
+    @Override
+    public int compareTo(Row row) {
+        return this.getLetter().compareToIgnoreCase(row.getLetter());
+    }
 }
