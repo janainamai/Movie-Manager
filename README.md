@@ -56,6 +56,15 @@ Language
 | id          | Integer | NO   | PRI |
 | description | String  | NO   |     |
 +-------------+---------+-----+------+
+
+Métodos disponíveis:
+
+- Listar
+- Consultar linguagem por nome
+- Salvar linguagem
+- Alterar linguagem
+- Deletar linguagem pelo id
+
 ```
 
 <br>**CATEGORY** (categoria de filme)
