@@ -26,8 +26,8 @@ public class LanguageService {
                 .orElseThrow(() -> new BadRequestException(LANGUAGE_NOT_FOUND));
     }
 
-    public Language findByDescription(String description) {
-        return languageRepository.findByDescriptionIgnoreCase(description)
+    public List<Language> findByDescriptionContainingIgnoreCase(String description) {
+        return languageRepository.findByDescriptionContainingIgnoreCase(description)
                 .orElseThrow(() -> new BadRequestException(LANGUAGE_NOT_FOUND));
     }
 
@@ -49,7 +49,7 @@ public class LanguageService {
         }
     }
 
-    public void delete(Integer id) {
+    public void deleteById(Integer id) {
         if (languageRepository.existsById(id)) {
             languageRepository.deleteById(id);
         } else {
