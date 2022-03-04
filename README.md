@@ -79,6 +79,15 @@ Category
 | id          | Integer | NO   | PRI |
 | description | String  | NO   |     |
 +-------------+---------+------+-----+
+
+Métodos disponíveis:
+
+- Listar
+- Consultar categoria por nome
+- Salvar categoria
+- Alterar categoria
+- Deletar categoria pelo id
+
 ```
 
 <br>**MOVIE** (filme)

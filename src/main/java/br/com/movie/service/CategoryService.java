@@ -21,13 +21,8 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category findById(Integer id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(CATEGORY_NOT_FOUND));
-    }
-
-    public Category findByDescription(String description) {
-        return categoryRepository.findByDescriptionIgnoreCase(description)
+    public List<Category> findByDescriptionContainingIgnoreCase(String description) {
+        return categoryRepository.findByDescriptionContainingIgnoreCase(description)
                 .orElseThrow(() -> new BadRequestException(CATEGORY_NOT_FOUND));
     }
 
@@ -49,7 +44,7 @@ public class CategoryService {
         }
     }
 
-    public void delete(Integer id) {
+    public void deleteById(Integer id) {
         if (categoryRepository.existsById(id)) {
             categoryRepository.deleteById(id);
         } else {

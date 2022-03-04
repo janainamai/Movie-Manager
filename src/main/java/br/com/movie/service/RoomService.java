@@ -97,7 +97,7 @@ public class RoomService {
 
     @Transactional
     private Room save(Room room) {
-        Optional<Room> optional = roomRepository.findByName(room.getName());
+        Optional<Room> optional = roomRepository.findByNameIgnoreCase(room.getName());
         if (optional.isPresent()) {
             throw new BadRequestException("There is already a room with this name");
         }
