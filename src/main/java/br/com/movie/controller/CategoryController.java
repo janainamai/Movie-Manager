@@ -1,7 +1,7 @@
 package br.com.movie.controller;
 
-import br.com.movie.model.dto.CategoryPost;
-import br.com.movie.model.dto.CategoryPut;
+import br.com.movie.model.dto.CategorySaveInput;
+import br.com.movie.model.dto.CategoryReplaceInput;
 import br.com.movie.model.Category;
 import br.com.movie.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,34 +19,29 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping
+    @GetMapping(path = "/list")
     public ResponseEntity<List<Category>> list() {
         return ResponseEntity.ok(categoryService.list());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Category> findById(@PathVariable Integer id) {
-        return ResponseEntity.ok(categoryService.findById(id));
+    @GetMapping("/findByDescriptionContainingIgnoreCase/{description}")
+    public ResponseEntity<List<Category>> findByDescriptionContainingIgnoreCase(@PathVariable String description) {
+        return ResponseEntity.ok(categoryService.findByDescriptionContainingIgnoreCase(description));
     }
 
-    @GetMapping("/description/{description}")
-    public ResponseEntity<Category> findByDescription(@PathVariable String description) {
-        return ResponseEntity.ok(categoryService.findByDescription(description));
+    @PostMapping(path = "/save")
+    public ResponseEntity<Category> save(@RequestBody @Valid CategorySaveInput input) {
+        return new ResponseEntity<>(categoryService.save(input.toEntity()), HttpStatus.CREATED);
     }
 
-    @PostMapping
-    public ResponseEntity<Category> save(@RequestBody @Valid CategoryPost category) {
-        return new ResponseEntity<>(categoryService.save(category.toEntity()), HttpStatus.CREATED);
+    @PutMapping(path = "/replace")
+    public ResponseEntity<Category> replace(@RequestBody @Valid CategoryReplaceInput input) {
+        return ResponseEntity.ok(categoryService.replace(input.toEntity()));
     }
 
-    @PutMapping
-    public ResponseEntity<Category> replace(@RequestBody @Valid CategoryPut category) {
-        return ResponseEntity.ok(categoryService.replace(category.toEntity()));
-    }
-
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        categoryService.delete(id);
+    @DeleteMapping(path = "/deleteById/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+        categoryService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

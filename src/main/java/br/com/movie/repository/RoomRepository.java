@@ -12,6 +12,6 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
 
     Optional<List<Room>> findByNameContainingIgnoreCase(String name);
 
-    Optional<Room> findByName(String nome);
+    Optional<Room> findByNameIgnoreCase(String nome);
 
 }
