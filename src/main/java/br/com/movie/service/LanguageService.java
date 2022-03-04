@@ -21,11 +21,6 @@ public class LanguageService {
         return languageRepository.findAll();
     }
 
-    public Language findById(Integer id) {
-        return languageRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(LANGUAGE_NOT_FOUND));
-    }
-
     public List<Language> findByDescriptionContainingIgnoreCase(String description) {
         return languageRepository.findByDescriptionContainingIgnoreCase(description)
                 .orElseThrow(() -> new BadRequestException(LANGUAGE_NOT_FOUND));
