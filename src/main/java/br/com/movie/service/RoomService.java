@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,10 @@ public class RoomService {
     private ArmchairRepository armchairRepository;
 
     public List<Room> list() {
-        return roomRepository.findAll();
+        List<Room> rooms = roomRepository.findAll();
+        rooms.forEach(room -> Collections.sort(room.getRows()));
+
+        return rooms;
     }
 
     @Transactional
@@ -80,7 +84,10 @@ public class RoomService {
 
         rowRepository.save(row);
         room.getRows().add(row);
-        return roomRepository.save(room);
+        Room roomSaved = roomRepository.save(room);
+        Collections.sort(roomSaved.getRows());
+
+        return room;
     }
 
     @Transactional(readOnly = true)
