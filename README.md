@@ -33,6 +33,15 @@ Armchair
 | number    | Integer | NO   |     |
 | available | boolean | NO   |     |
 +-----------+---------+------+-----+
+
+Métodos disponíveis:
+
+- Consultar todas as salas de cinema.
+- Consultar sala de cinema por nome.
+- Salvar uma sala de cinema.
+- Consultar as cadeiras de uma sala de cinema.
+- Alterar a quantidade de cadeiras da fileira de uma sala de cinema.
+
 ```
 
 <br>**LANGUAGE** (idioma)

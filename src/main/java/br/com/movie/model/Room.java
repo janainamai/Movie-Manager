@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -23,4 +25,5 @@ public class Room {
 
     @OneToMany(cascade = CascadeType.REFRESH)
     private List<Row> rows;
+
 }

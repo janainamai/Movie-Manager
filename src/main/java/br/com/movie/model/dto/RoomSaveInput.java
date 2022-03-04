@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class RoomPost {
+public class RoomSaveInput {
 
     @NotNull( message = "name cannot be null")
     private String name;

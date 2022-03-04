@@ -4,12 +4,14 @@ import br.com.movie.exception.BadRequestException;
 import br.com.movie.model.Armchair;
 import br.com.movie.model.Room;
 import br.com.movie.model.Row;
-import br.com.movie.model.dto.RoomPost;
+import br.com.movie.model.dto.ChangeNumberArmchairsInRowInput;
+import br.com.movie.model.dto.RoomSaveInput;
 import br.com.movie.repository.ArmchairRepository;
 import br.com.movie.repository.RoomRepository;
 import br.com.movie.repository.RowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,42 +37,8 @@ public class RoomService {
         return roomRepository.findAll();
     }
 
-    public Room findById(Integer id) {
-        return roomRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(ROOM_NOT_FOUND));
-    }
-
-    public Room findByName(String name) {
-        return roomRepository.findByNameIgnoreCase(name)
-                .orElseThrow(() -> new BadRequestException(ROOM_NOT_FOUND));
-    }
-
-    public Room save(Room room) {
-        Optional<Room> optional = roomRepository.findByNameIgnoreCase(room.getName());
-        if (optional.isPresent()) {
-            throw new BadRequestException("There is already a room with this name");
-        }
-
-        return roomRepository.save(room);
-    }
-
-    public Room replace(Room room) {
-        if (roomRepository.existsById(room.getId())) {
-            return this.save(room);
-        } else {
-            throw new BadRequestException(ROOM_NOT_FOUND);
-        }
-    }
-
-    public void deleteById(Integer id) {
-        if (roomRepository.existsById(id)) {
-            roomRepository.deleteById(id);
-        } else {
-            throw new BadRequestException(ROOM_NOT_FOUND);
-        }
-    }
-
-    public Room buildRoom(RoomPost input) {
+    @Transactional
+    public Room buildRoom(RoomSaveInput input) {
         Room roomToSave = new Room();
         roomToSave.setName(input.getName());
         Room room = save(roomToSave);
@@ -85,6 +53,56 @@ public class RoomService {
         room.setRows(rows);
         roomRepository.save(room);
         return room;
+    }
+
+    @Transactional
+    public List<Armchair> getArmchairsByRoomId(Integer roomId) {
+        Room room = findById(roomId);
+
+        List<Armchair> chairs = new ArrayList<>();
+
+        for (Row row: room.getRows()) {
+            chairs.addAll(row.getArmchairs());
+        }
+
+        return chairs;
+    }
+
+    @Transactional
+    public Room changeNumberArmchairsInRow(ChangeNumberArmchairsInRowInput input) {
+        Room room = findById(input.getRoomId());
+        room.getRows().removeIf(r -> input.getLetterRow().equals(r.getLetter()));
+
+        Row row = Row.builder()
+                .letter(input.getLetterRow())
+                .armchairs(generateChairs(input.getNumberOfArmchairs(), input.getLetterRow()))
+                .build();
+
+        rowRepository.save(row);
+        room.getRows().add(row);
+        return roomRepository.save(room);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Room> findByNameContainingIgnoreCase(String name) {
+        return roomRepository.findByNameContainingIgnoreCase(name)
+                .orElseThrow(() -> new BadRequestException(ROOM_NOT_FOUND));
+    }
+
+    @Transactional
+    private Room findById(Integer id) {
+        return roomRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException(ROOM_NOT_FOUND));
+    }
+
+    @Transactional
+    private Room save(Room room) {
+        Optional<Room> optional = roomRepository.findByName(room.getName());
+        if (optional.isPresent()) {
+            throw new BadRequestException("There is already a room with this name");
+        }
+
+        return roomRepository.save(room);
     }
 
     private List<Row> generateRows(Integer numberOfRows) {
@@ -116,15 +134,4 @@ public class RoomService {
         return chairs;
     }
 
-    public List<Armchair> getArmchairsByRoomId(Integer roomId) {
-        Room room = findById(roomId);
-
-        List<Armchair> chairs = new ArrayList<>();
-
-        for (Row row: room.getRows()) {
-            chairs.addAll(row.getArmchairs());
-        }
-
-        return chairs;
-    }
 }
