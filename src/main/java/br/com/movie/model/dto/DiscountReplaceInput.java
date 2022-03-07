@@ -7,17 +7,20 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class DiscountPut implements ConvertDTO<Discount> {
+public class DiscountReplaceInput implements ConvertDTO<Discount> {
 
-    @NotNull(message = "Identifier cannot be null")
+    @NotNull(message = "identifier cannot be null")
     private Integer id;
 
-    @NotNull(message = "Description cannot be null")
-    @NotEmpty(message = "Description cannot be empty")
+    @NotNull(message = "description cannot be null")
+    @NotEmpty(message = "description cannot be empty")
     private String description;
 
-    @NotNull(message = "Percentage cannot be null")
+    @NotNull(message = "percentage cannot be null")
     private Double percentage;
+
+    @NotNull(message = "active cannot be null")
+    private boolean active;
 
     @Override
     public Discount toEntity() {
@@ -25,6 +28,7 @@ public class DiscountPut implements ConvertDTO<Discount> {
                 .id(this.id)
                 .description(this.description)
                 .percentage(this.percentage)
+                .active(this.active)
                 .build();
     }
 }

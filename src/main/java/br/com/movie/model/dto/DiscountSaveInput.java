@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class DiscountPost implements ConvertDTO<Discount> {
+public class DiscountSaveInput implements ConvertDTO<Discount> {
 
     @NotNull(message = "Description cannot be null")
     @NotEmpty(message = "Description cannot be empty")

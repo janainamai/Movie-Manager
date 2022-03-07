@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.springframework.http.ResponseEntity.*;
+
 @RestController
 @RequestMapping("/ticketprice")
 public class TicketPriceController {
@@ -20,12 +22,12 @@ public class TicketPriceController {
 
     @GetMapping(path = "/list")
     public ResponseEntity<List<TicketPrice>> list() {
-        return ResponseEntity.ok(ticketPriceService.list());
+        return ok(ticketPriceService.list());
     }
 
     @GetMapping(path = "/getCurrentPrice")
     public ResponseEntity<Double> getCurrentPrice() {
-        return ResponseEntity.ok(ticketPriceService.getCurrentPrice());
+        return ok(ticketPriceService.getCurrentPrice());
     }
 
     @PostMapping(path = "/save")

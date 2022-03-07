@@ -23,7 +23,7 @@ public class DayOfWeekDiscountPost implements ConvertDTO<DayOfWeekDiscount> {
     public DayOfWeekDiscount toEntity() {
         return DayOfWeekDiscount.builder()
                 .dayOfWeek(this.dayOfWeek)
-                .isActive(this.isActive)
+                .active(this.isActive)
                 .percentage(this.percentage)
                 .build();
     }

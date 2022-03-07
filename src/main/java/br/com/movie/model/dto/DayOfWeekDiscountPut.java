@@ -17,7 +17,7 @@ public class DayOfWeekDiscountPut implements ConvertDTO<DayOfWeekDiscount> {
     private String dayOfWeek;
 
     @NotNull(message = "isActive cannot be null")
-    private Boolean isActive;
+    private Boolean active;
 
     @NotNull(message = "percentage cannot be null")
     private Double percentage;
@@ -27,7 +27,7 @@ public class DayOfWeekDiscountPut implements ConvertDTO<DayOfWeekDiscount> {
         return DayOfWeekDiscount.builder()
                 .id(id)
                 .dayOfWeek(dayOfWeek)
-                .isActive(isActive)
+                .active(active)
                 .percentage(percentage)
                 .build();
     }

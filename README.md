@@ -195,8 +195,18 @@ Discount
 | id          | Integer | NO   | PRI |
 | description | String  | NO   |     |
 | percentage  | Double  | NO   |     |
-| active      | boolean  | NO   |     |
+| active      | boolean | NO   |     |
 +-------------+---------+------+-----+
+
+Métodos disponíveis:
+
+- Listar
+- Consultar por descrição
+- Consultar descontos ativos
+- Salvar
+- Alterar
+- Deletar por id
+
 ```
 
 <br>**DAY OF WEEK DISCOUNT** (desconto de dia da semana)
@@ -217,7 +227,7 @@ DayOfWeekDiscount
 +------------+---------+------+-----+
 | id         | Integer | NO   | PRI |
 | dayOfWeek  | String  | NO   |     |
-| isActive   | Boolean | NO   |     |
+| active     | Boolean | NO   |     |
 | percentage | Double  | NO   |     |
 +------------+---------+------+-----+
 ```
