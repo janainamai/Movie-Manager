@@ -6,6 +6,8 @@ import br.com.movie.repository.DayOfWeekDiscountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,20 +23,15 @@ public class DayOfWeekDiscountService {
         return repository.findAll();
     }
 
-    public DayOfWeekDiscount findById(Integer id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new BadRequestException(DAYOFWEEK_NOT_FOUND));
-    }
-
-    public DayOfWeekDiscount findByDayOfWeek(String dayOfWeek) {
-        return repository.findByDayOfWeekIgnoreCase(dayOfWeek)
-                .orElseThrow(() -> new BadRequestException(DAYOFWEEK_NOT_FOUND));
+    public DayOfWeekDiscount getTodaysDiscount() {
+        DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
+        return repository.findByDayOfWeek(dayOfWeek.toString());
     }
 
     public DayOfWeekDiscount save(DayOfWeekDiscount dayOfWeekDiscount) {
         Optional<DayOfWeekDiscount> optional = repository.findByDayOfWeekIgnoreCase(dayOfWeekDiscount.getDayOfWeek());
 
-        if(optional.isPresent()) {
+        if (optional.isPresent()) {
             throw new BadRequestException("There is already a day of week discount with this description");
         }
 
@@ -50,11 +47,4 @@ public class DayOfWeekDiscountService {
         }
     }
 
-    public void deleteById(Integer id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        } else {
-            throw new BadRequestException(DAYOFWEEK_NOT_FOUND);
-        }
-    }
 }

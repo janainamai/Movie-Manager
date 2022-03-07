@@ -22,4 +22,6 @@ public class Discount {
     private String description;
 
     private Double percentage;
+
+    private boolean active;
 }

@@ -7,14 +7,17 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class DayOfWeekDiscountPost implements ConvertDTO<DayOfWeekDiscount> {
+public class DayOfWeekDiscountReplaceInput implements ConvertDTO<DayOfWeekDiscount> {
+
+    @NotNull(message = "id cannot be null")
+    private Integer id;
 
     @NotNull(message = "dayOfWeek cannot be null")
     @NotEmpty(message = "dayOfWeek cannot be empty")
     private String dayOfWeek;
 
     @NotNull(message = "isActive cannot be null")
-    private Boolean isActive;
+    private Boolean active;
 
     @NotNull(message = "percentage cannot be null")
     private Double percentage;
@@ -22,9 +25,10 @@ public class DayOfWeekDiscountPost implements ConvertDTO<DayOfWeekDiscount> {
     @Override
     public DayOfWeekDiscount toEntity() {
         return DayOfWeekDiscount.builder()
-                .dayOfWeek(this.dayOfWeek)
-                .isActive(this.isActive)
-                .percentage(this.percentage)
+                .id(id)
+                .dayOfWeek(dayOfWeek)
+                .active(active)
+                .percentage(percentage)
                 .build();
     }
 }

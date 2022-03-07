@@ -21,13 +21,17 @@ public class DiscountService {
         return repository.findAll();
     }
 
-    public Discount findById(Integer id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new BadRequestException(DISCOUNT_NOT_FOUND));
+    public List<Discount> findByDescriptionContainingIgnoreCase(String description) {
+        Optional<List<Discount>> optional = repository.findByDescriptionContainingIgnoreCase(description);
+        if (optional.isEmpty()) {
+            throw new BadRequestException(DISCOUNT_NOT_FOUND);
+        }
+
+        return optional.get();
     }
 
-    public Discount findByDescription(String description) {
-        Optional<Discount> optional = repository.findByDescriptionIgnoreCase(description);
+    public List<Discount> findAtiveDiscounts() {
+        Optional<List<Discount>> optional = repository.findByActiveTrue();
         if (optional.isEmpty()) {
             throw new BadRequestException(DISCOUNT_NOT_FOUND);
         }
@@ -42,6 +46,7 @@ public class DiscountService {
             throw new BadRequestException("There is already a discount with this description");
         }
 
+        discount.setActive(true);
         return repository.save(discount);
     }
 
@@ -53,7 +58,7 @@ public class DiscountService {
         }
     }
 
-    public void delete(Integer id) {
+    public void deleteById(Integer id) {
         if (repository.existsById(id)) {
             repository.deleteById(id);
         } else {

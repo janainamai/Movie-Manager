@@ -34,7 +34,7 @@ Armchair
 | available | boolean | NO   |     |
 +-----------+---------+------+-----+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar salas
 - Consultar sala por nome
@@ -57,7 +57,7 @@ Language
 | description | String  | NO   |     |
 +-------------+---------+-----+------+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar
 - Consultar por nome
@@ -80,7 +80,7 @@ Category
 | description | String  | NO   |     |
 +-------------+---------+------+-----+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar
 - Consultar por nome
@@ -111,7 +111,7 @@ Movie
 | type               | MovieType | NO   |     |
 +--------------------+-----------+---- -+-----+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar
 - Consultar por título
@@ -135,7 +135,7 @@ Payment
 | description | String  | NO   |     |
 +-------------+---------+-----+------+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar
 - Consultar por descrição
@@ -169,7 +169,7 @@ TicketPrice
 | finished | LocalDate | YES  |     |
 +----------+-----------+---- -+-----+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar
 - Consultar preço vigente
@@ -195,8 +195,18 @@ Discount
 | id          | Integer | NO   | PRI |
 | description | String  | NO   |     |
 | percentage  | Double  | NO   |     |
-| active      | boolean  | NO   |     |
+| active      | boolean | NO   |     |
 +-------------+---------+------+-----+
+
+API disponível:
+
+- Listar
+- Consultar por descrição
+- Consultar descontos ativos
+- Salvar
+- Alterar
+- Deletar por id
+
 ```
 
 <br>**DAY OF WEEK DISCOUNT** (desconto de dia da semana)
@@ -217,7 +227,13 @@ DayOfWeekDiscount
 +------------+---------+------+-----+
 | id         | Integer | NO   | PRI |
 | dayOfWeek  | String  | NO   |     |
-| isActive   | Boolean | NO   |     |
+| active     | Boolean | NO   |     |
 | percentage | Double  | NO   |     |
 +------------+---------+------+-----+
+
+API disponível:
+
+- Listar
+- Alterar
+
 ```
