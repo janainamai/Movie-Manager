@@ -23,8 +23,10 @@ public class TicketPriceService {
     }
 
     public Double getCurrentPrice() {
-        if (getCurrentTicketPrice().isPresent()) {
-            return getCurrentTicketPrice().get().getPrice();
+        Optional<TicketPrice> currentTicketPrice = getCurrentTicketPrice();
+
+        if (currentTicketPrice.isPresent()) {
+            return currentTicketPrice.get().getPrice();
         } else {
             throw new BadRequestException("There is no registered price yet");
         }
@@ -32,23 +34,13 @@ public class TicketPriceService {
 
     /**
      * Inserts an end date into the current price (if exists) and saves a new price with today's start date.
-     *
-     * @param ticketPrice contains value of new price to be saved
-     * @return saved price
      */
     @Transactional
     public TicketPrice saveNewTicketPrice(TicketPrice ticketPrice) {
         inactivateCurrentTicketPrice();
-
         return save(ticketPrice);
     }
 
-    /**
-     * Saves a new price with today's start date.
-     *
-     * @param ticketPrice contains value of new price to be saved
-     * @return saved price
-     */
     private TicketPrice save(TicketPrice ticketPrice) {
         ticketPrice.setCreated(LocalDate.now());
         return ticketPriceRepository.save(ticketPrice);
@@ -60,11 +52,6 @@ public class TicketPriceService {
         }
     }
 
-    /**
-     * Returns the price that has no end date.
-     *
-     * @return Optional of TicketPrice
-     */
     private Optional<TicketPrice> getCurrentTicketPrice() {
         List<TicketPrice> list = ticketPriceRepository
                 .findAll()

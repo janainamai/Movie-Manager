@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class TicketPricePost implements ConvertDTO<TicketPrice> {
+public class TicketPriceSaveInput implements ConvertDTO<TicketPrice> {
 
     @NotNull(message = "Price cannot be null")
     private Double price;
