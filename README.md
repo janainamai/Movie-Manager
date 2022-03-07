@@ -168,6 +168,11 @@ TicketPrice
 | created  | LocalDate | NO   |     |
 | finished | LocalDate | YES  |     |
 +----------+-----------+---- -+-----+
+
+Métodos disponíveis:
+
+- 
+
 ```
 
 <br>**DISCOUNT** (desconto)

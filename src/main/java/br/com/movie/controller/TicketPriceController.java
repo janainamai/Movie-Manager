@@ -1,7 +1,7 @@
 package br.com.movie.controller;
 
 import br.com.movie.model.TicketPrice;
-import br.com.movie.model.dto.TicketPricePost;
+import br.com.movie.model.dto.TicketPriceSaveInput;
 import br.com.movie.service.TicketPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,18 +18,18 @@ public class TicketPriceController {
     @Autowired
     private TicketPriceService ticketPriceService;
 
-    @GetMapping
+    @GetMapping(path = "/list")
     public ResponseEntity<List<TicketPrice>> list() {
         return ResponseEntity.ok(ticketPriceService.list());
     }
 
-    @GetMapping(path = "/current")
+    @GetMapping(path = "/getCurrentPrice")
     public ResponseEntity<Double> getCurrentPrice() {
         return ResponseEntity.ok(ticketPriceService.getCurrentPrice());
     }
 
-    @PostMapping
-    public ResponseEntity<TicketPrice> save(@RequestBody @Valid TicketPricePost ticketPrice) {
-        return new ResponseEntity<>(ticketPriceService.saveNewTicketPrice(ticketPrice.toEntity()), HttpStatus.CREATED);
+    @PostMapping(path = "/save")
+    public ResponseEntity<TicketPrice> save(@RequestBody @Valid TicketPriceSaveInput input) {
+        return new ResponseEntity<>(ticketPriceService.saveNewTicketPrice(input.toEntity()), HttpStatus.CREATED);
     }
 }
