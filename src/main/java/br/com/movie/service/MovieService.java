@@ -20,8 +20,8 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public List<Movie> findByTitle(String title) {
-        List<Movie> list = movieRepository.findByTitleIgnoreCase(title);
+    public List<Movie> findByTitleContainingIgnoreCase(String title) {
+        List<Movie> list = movieRepository.findByTitleContainingIgnoreCase(title);
 
         if (list.isEmpty()) {
             throw new BadRequestException(MOVIE_NOT_FOUND);
@@ -45,7 +45,7 @@ public class MovieService {
         }
     }
 
-    public void delete(Integer id) {
+    public void deleteById(Integer id) {
         if (movieRepository.existsById(id)) {
             movieRepository.deleteById(id);
         } else {
@@ -55,9 +55,6 @@ public class MovieService {
 
     /**
      * Validates if a movie with this title, language and type already exists.
-     *
-     * @param movie Movie to be validated
-     * @return false if already exists and true if not
      */
     private boolean validToSave(Movie movie) {
         List<Movie> list = movieRepository.findByTitleIgnoreCase(movie.getTitle());
@@ -74,9 +71,6 @@ public class MovieService {
 
     /**
      * Validates if a movie with this title, language and type already exists.
-     *
-     * @param movie Movie to be validated
-     * @return false if already exists and true if not
      */
     private boolean validToReplace(Movie movie) {
         if (movieRepository.existsById(movie.getId())) {
