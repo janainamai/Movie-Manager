@@ -11,10 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
-public class MoviePut implements ConvertDTO<Movie>{
-
-    @NotNull(message = "Identifier cannot be null")
-    private Integer id;
+public class MovieSaveInput implements ConvertDTO<Movie>{
 
     @NotEmpty(message = "Title cannot be null")
     private String title;
@@ -40,7 +37,6 @@ public class MoviePut implements ConvertDTO<Movie>{
     @Override
     public Movie toEntity() {
         return Movie.builder()
-                .id(this.id)
                 .title(this.title)
                 .synopsis(this.synopsis)
                 .category(this.category)

@@ -110,6 +110,15 @@ Movie
 | durationMinutes    | Long      | NO   |     |
 | type               | MovieType | NO   |     |
 +--------------------+-----------+---- -+-----+
+
+Métodos disponíveis:
+
+- Listar
+- Consultar filme por título
+- Salvar filme
+- Alterar filme
+- Deletar filme pelo id
+
 ```
 
 <br>**PAYMENT** (pagamento)
