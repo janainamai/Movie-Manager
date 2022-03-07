@@ -134,6 +134,15 @@ Payment
 | id          | Integer | NO   | PRI |
 | description | String  | NO   |     |
 +-------------+---------+-----+------+
+
+Métodos disponíveis:
+
+- Listar
+- Consultar pagamento por descrição
+- Salvar pagamento
+- Alterar pagamento
+- Deletar pagamento pelo id
+
 ```
 
 <br>**TICKET PRICE** (preço de um ingresso)
