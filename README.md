@@ -34,7 +34,7 @@ Armchair
 | available | boolean | NO   |     |
 +-----------+---------+------+-----+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar salas
 - Consultar sala por nome
@@ -57,7 +57,7 @@ Language
 | description | String  | NO   |     |
 +-------------+---------+-----+------+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar
 - Consultar por nome
@@ -80,7 +80,7 @@ Category
 | description | String  | NO   |     |
 +-------------+---------+------+-----+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar
 - Consultar por nome
@@ -111,7 +111,7 @@ Movie
 | type               | MovieType | NO   |     |
 +--------------------+-----------+---- -+-----+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar
 - Consultar por título
@@ -135,7 +135,7 @@ Payment
 | description | String  | NO   |     |
 +-------------+---------+-----+------+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar
 - Consultar por descrição
@@ -169,7 +169,7 @@ TicketPrice
 | finished | LocalDate | YES  |     |
 +----------+-----------+---- -+-----+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar
 - Consultar preço vigente
@@ -198,7 +198,7 @@ Discount
 | active      | boolean | NO   |     |
 +-------------+---------+------+-----+
 
-Métodos disponíveis:
+API disponível:
 
 - Listar
 - Consultar por descrição
@@ -230,4 +230,10 @@ DayOfWeekDiscount
 | active     | Boolean | NO   |     |
 | percentage | Double  | NO   |     |
 +------------+---------+------+-----+
+
+API disponível:
+
+- Listar
+- Alterar
+
 ```

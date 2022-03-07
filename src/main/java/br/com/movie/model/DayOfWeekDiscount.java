@@ -23,7 +23,7 @@ public class DayOfWeekDiscount {
 
     private String dayOfWeek;
 
-    private Boolean active;
-
     private Double percentage;
+
+    private Boolean active;
 }

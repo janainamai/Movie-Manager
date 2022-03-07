@@ -11,4 +11,5 @@ public interface DayOfWeekDiscountRepository extends JpaRepository<DayOfWeekDisc
 
     Optional<DayOfWeekDiscount> findByDayOfWeekIgnoreCase(String dayOfWeek);
 
+    DayOfWeekDiscount findByDayOfWeek(String dayOfWeek);
 }
