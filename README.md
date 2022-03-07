@@ -173,7 +173,7 @@ Métodos disponíveis:
 
 - Listar
 - Consultar preço vigente
-- Salvar
+- Salvar novo preço vigente
 
 ```
 
