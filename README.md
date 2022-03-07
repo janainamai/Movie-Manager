@@ -36,11 +36,11 @@ Armchair
 
 Métodos disponíveis:
 
-- Consultar todas as salas de cinema.
-- Consultar sala de cinema por nome.
-- Salvar uma sala de cinema.
-- Consultar as cadeiras de uma sala de cinema.
-- Alterar a quantidade de cadeiras da fileira de uma sala de cinema.
+- Listar salas
+- Consultar sala por nome
+- Salvar sala com fileiras e cadeiras
+- Consultar as cadeiras de uma sala de cinema por id
+- Alterar a quantidade de cadeiras da fileira de uma sala de cinema
 
 ```
 
@@ -60,10 +60,10 @@ Language
 Métodos disponíveis:
 
 - Listar
-- Consultar linguagem por nome
-- Salvar linguagem
-- Alterar linguagem
-- Deletar linguagem pelo id
+- Consultar por nome
+- Salvar
+- Alterar
+- Deletar por id
 
 ```
 
@@ -83,10 +83,10 @@ Category
 Métodos disponíveis:
 
 - Listar
-- Consultar categoria por nome
-- Salvar categoria
-- Alterar categoria
-- Deletar categoria pelo id
+- Consultar por nome
+- Salvar
+- Alterar
+- Deletar por id
 
 ```
 
@@ -114,10 +114,10 @@ Movie
 Métodos disponíveis:
 
 - Listar
-- Consultar filme por título
-- Salvar filme
-- Alterar filme
-- Deletar filme pelo id
+- Consultar por título
+- Salvar
+- Alterar
+- Deletar por id
 
 ```
 
@@ -138,10 +138,10 @@ Payment
 Métodos disponíveis:
 
 - Listar
-- Consultar pagamento por descrição
-- Salvar pagamento
-- Alterar pagamento
-- Deletar pagamento pelo id
+- Consultar por descrição
+- Salvar
+- Alterar
+- Deletar por id
 
 ```
 
@@ -171,7 +171,9 @@ TicketPrice
 
 Métodos disponíveis:
 
-- 
+- Listar
+- Consultar preço vigente
+- Salvar
 
 ```
 
