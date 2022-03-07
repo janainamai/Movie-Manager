@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class PaymentPut implements ConvertDTO<Payment> {
+public class PaymentReplaceInput implements ConvertDTO<Payment> {
 
     @NotNull(message = "Identifier cannot be null")
     private int id;

@@ -21,13 +21,8 @@ public class PaymentService {
         return paymentRepository.findAll();
     }
 
-    public Payment findById(Integer id) {
-        return paymentRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(PAYMENT_NOT_FOUND));
-    }
-
-    public Payment findByDescription(String description) {
-        return paymentRepository.findByDescriptionIgnoreCase(description)
+    public List<Payment> findByDescriptionContainingIgnoreCase(String description) {
+        return paymentRepository.findByDescriptionContainingIgnoreCase(description)
                 .orElseThrow(() -> new BadRequestException(PAYMENT_NOT_FOUND));
     }
 
@@ -49,7 +44,7 @@ public class PaymentService {
         }
     }
 
-    public void delete(Integer id) {
+    public void deleteById(Integer id) {
         if (paymentRepository.existsById(id)) {
             paymentRepository.deleteById(id);
         } else {
