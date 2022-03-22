@@ -1,8 +1,9 @@
 **ROOM** (sala de cinema), **ROW** (fileira de uma sala) e **ARMCHAIR** (poltrona de uma fileira)
 
 Cadastramos uma sala de cinema, informamos quantas fileiras existem e a quantidade 
-de poltronas por fileira. Com essas informações a sala é criada, possuindo uma 
-quantidade de fileiras com suas respectivas poltronas.
+de poltronas por fileira. Com essas informações pré cadastradas, nossa sala e suas 
+respectivas poltronas são criadas para que o cliente escolha onde ele irá sentar para 
+assistir o filme desejado. 
 
 Após essa construção inicial da sala, é possível alterar a quantidade de cadeiras 
 de uma determinada fileira, determinando assim a planta exata da sala de cinema. 
