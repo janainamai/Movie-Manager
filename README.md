@@ -123,7 +123,7 @@ API disponível:
 
 <br>**PAYMENT** (pagamento)
 
-Utilizado para dscrever a forma de pagamento adotada durante a compra de um 
+Utilizado para descrever a forma de pagamento adotada durante a compra de um 
 ingresso.
 
 ```sql
