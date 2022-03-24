@@ -5,6 +5,7 @@ import br.com.movie.model.ArmchairModel;
 import br.com.movie.model.Room;
 import br.com.movie.model.dto.ChangeNumberArmchairsInRowInput;
 import br.com.movie.model.dto.RoomSaveInput;
+import br.com.movie.model.dto.RoomSaveOutput;
 import br.com.movie.repository.ArmchairModelRepository;
 import br.com.movie.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +34,21 @@ public class RoomService {
     }
 
     @Transactional
-    public Room buildRoom(RoomSaveInput input) {
+    public RoomSaveOutput buildRoom(RoomSaveInput input) {
         Room room = save(new Room(input.getName()));
+
+        RoomSaveOutput output = new RoomSaveOutput();
+        output.setName(room.getName());
+        output.setArmchairs(new ArrayList<>());
 
         List<String> letters = generateRowLetters(input.getNumberOfRows());
 
         for (String letter : letters) {
-            generateChairs(input.getArmchairPerRow(), letter, room.getId());
+            List<ArmchairModel> armchairs = generateChairs(input.getArmchairPerRow(), letter, room.getId());
+            output.getArmchairs().addAll(armchairs);
         }
 
-        return room;
-        // poderia retornar um RoomSaveOutput com lista de cadeiras junto
+        return output;
     }
 
     @Transactional(readOnly = true)

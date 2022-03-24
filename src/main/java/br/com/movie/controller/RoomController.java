@@ -4,6 +4,7 @@ import br.com.movie.model.ArmchairModel;
 import br.com.movie.model.Room;
 import br.com.movie.model.dto.ChangeNumberArmchairsInRowInput;
 import br.com.movie.model.dto.RoomSaveInput;
+import br.com.movie.model.dto.RoomSaveOutput;
 import br.com.movie.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class RoomController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Room> save(@RequestBody @Valid RoomSaveInput input) {
+    public ResponseEntity<RoomSaveOutput> save(@RequestBody @Valid RoomSaveInput input) {
         return ok(roomService.buildRoom(input));
     }
 
