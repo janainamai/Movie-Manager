@@ -20,6 +20,4 @@ public class Armchair {
 
     private Integer number;
 
-    private boolean available;
-
 }

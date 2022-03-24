@@ -34,6 +34,7 @@ public class RoomService {
     @Autowired
     private ArmchairRepository armchairRepository;
 
+    @Transactional(readOnly = true)
     public List<Room> list() {
         List<Room> rooms = roomRepository.findAll();
         rooms.forEach(room -> Collections.sort(room.getRows()));
@@ -59,7 +60,7 @@ public class RoomService {
         return room;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Armchair> getArmchairsByRoomId(Integer roomId) {
         Room room = findById(roomId);
 
@@ -96,13 +97,12 @@ public class RoomService {
                 .orElseThrow(() -> new BadRequestException(ROOM_NOT_FOUND));
     }
 
-    @Transactional
-    private Room findById(Integer id) {
+    @Transactional(readOnly = true)
+    public Room findById(Integer id) {
         return roomRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException(ROOM_NOT_FOUND));
+                .orElseThrow(() -> new BadRequestException("No room was found with id " + id));
     }
 
-    @Transactional
     private Room save(Room room) {
         Optional<Room> optional = roomRepository.findByNameIgnoreCase(room.getName());
         if (optional.isPresent()) {

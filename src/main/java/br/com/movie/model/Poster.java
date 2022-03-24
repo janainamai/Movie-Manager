@@ -1,13 +1,12 @@
 package br.com.movie.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalDateTime;
 
 import static javax.persistence.CascadeType.REFRESH;
 
@@ -15,6 +14,7 @@ import static javax.persistence.CascadeType.REFRESH;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Poster {
 
     @Id
@@ -24,13 +24,9 @@ public class Poster {
     @ManyToOne(cascade = REFRESH)
     private Movie movie;
 
-    private LocalDate date;
-
-    private Time hour;
+    private LocalDateTime dateTime;
 
     @ManyToOne(cascade = REFRESH)
     private Room room;
 
-    @OneToMany
-    private List<Armchair> armchairs;
 }

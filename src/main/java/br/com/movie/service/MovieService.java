@@ -5,6 +5,7 @@ import br.com.movie.model.Movie;
 import br.com.movie.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,10 +17,18 @@ public class MovieService {
     @Autowired
     private MovieRepository movieRepository;
 
+    @Transactional(readOnly = true)
     public List<Movie> list() {
         return movieRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public Movie findById(Integer id) {
+        return movieRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("No movie was found with id " + id));
+    }
+
+    @Transactional(readOnly = true)
     public List<Movie> findByTitleContainingIgnoreCase(String title) {
         List<Movie> list = movieRepository.findByTitleContainingIgnoreCase(title);
 
@@ -30,6 +39,7 @@ public class MovieService {
         }
     }
 
+    @Transactional
     public Movie save(Movie movie) {
         if (!validToSave(movie)) {
             throw new BadRequestException("A movie with this name, language and type already exists");
@@ -37,6 +47,7 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
+    @Transactional
     public Movie replace(Movie movie) {
         if (validToReplace(movie)) {
             return movieRepository.save(movie);
@@ -45,6 +56,7 @@ public class MovieService {
         }
     }
 
+    @Transactional
     public void deleteById(Integer id) {
         if (movieRepository.existsById(id)) {
             movieRepository.deleteById(id);
@@ -99,5 +111,4 @@ public class MovieService {
         return false;
     }
 
-    //TODO método que altera os dados isOnActivePoster
 }
