@@ -5,7 +5,7 @@ import br.com.movie.model.*;
 import br.com.movie.model.dto.BookArmchairInput;
 import br.com.movie.model.dto.PosterSaveInput;
 import br.com.movie.model.dto.UnbookArmchairInput;
-import br.com.movie.repository.PosterArmchairRepository;
+import br.com.movie.repository.ArmchairRepository;
 import br.com.movie.repository.PosterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class PosterService {
     @Autowired
     private MovieService movieService;
     @Autowired
-    private PosterArmchairRepository posterArmchairRepository;
+    private ArmchairRepository posterArmchairRepository;
     @Autowired
     private RoomService roomService;
 
@@ -59,13 +59,13 @@ public class PosterService {
     }
 
     private void generateArmchairs(List<Poster> posters) {
-        List<PosterArmchair> posterArmchairs = new ArrayList<>();
+        List<Armchair> posterArmchairs = new ArrayList<>();
 
         posters.forEach(poster -> {
-            List<Armchair> armchairsMold = roomService.getArmchairsByRoomId(poster.getRoom().getId());
+            List<ArmchairModel> armchairsMold = roomService.getArmchairsByRoomId(poster.getRoom().getId());
 
-            List<PosterArmchair> armchairs = armchairsMold.stream()
-                    .map(chair -> PosterArmchair.builder()
+            List<Armchair> armchairs = armchairsMold.stream()
+                    .map(chair -> Armchair.builder()
                             .posterId(poster.getId())
                             .letterNumber(chair.getLetter() + chair.getNumber())
                             .available(true)
@@ -79,16 +79,16 @@ public class PosterService {
     }
 
     @Transactional(readOnly = true)
-    public List<PosterArmchair> getArmchairsByPosterId(Integer posterId) {
+    public List<Armchair> getArmchairsByPosterId(Integer posterId) {
         return posterArmchairRepository.findByPosterIdGroupByLetterNumber(posterId);
     }
 
     @Transactional
-    public List<PosterArmchair> bookArmchairs(BookArmchairInput input) {
-        List<PosterArmchair> armchairs = new ArrayList<>();
+    public List<Armchair> bookArmchairs(BookArmchairInput input) {
+        List<Armchair> armchairs = new ArrayList<>();
 
         input.getArmchairsId().forEach(id -> {
-            PosterArmchair armchair = posterArmchairRepository.findById(id)
+            Armchair armchair = posterArmchairRepository.findById(id)
                     .orElseThrow(() -> new BadRequestException("No room was found with id " + id));
 
             armchair.setAvailable(false);
@@ -101,11 +101,11 @@ public class PosterService {
     }
 
     @Transactional
-    public List<PosterArmchair> unbookArmchairs(UnbookArmchairInput input) {
-        List<PosterArmchair> armchairs = new ArrayList<>();
+    public List<Armchair> unbookArmchairs(UnbookArmchairInput input) {
+        List<Armchair> armchairs = new ArrayList<>();
 
         input.getArmchairsId().forEach(id -> {
-            PosterArmchair armchair = posterArmchairRepository.findById(id)
+            Armchair armchair = posterArmchairRepository.findById(id)
                     .orElseThrow(() -> new BadRequestException("No room was found with id " + id));
 
             armchair.setAvailable(true);

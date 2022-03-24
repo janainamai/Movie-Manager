@@ -22,7 +22,7 @@ public class Ticket {
     private Poster poster;
 
     @ManyToOne(cascade = REFRESH)
-    private Armchair armchair;
+    private ArmchairModel armchair;
 
     private String cpf;
 

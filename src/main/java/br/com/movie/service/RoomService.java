@@ -1,20 +1,17 @@
 package br.com.movie.service;
 
 import br.com.movie.exception.BadRequestException;
-import br.com.movie.model.Armchair;
+import br.com.movie.model.ArmchairModel;
 import br.com.movie.model.Room;
-import br.com.movie.model.Row;
 import br.com.movie.model.dto.ChangeNumberArmchairsInRowInput;
 import br.com.movie.model.dto.RoomSaveInput;
-import br.com.movie.repository.ArmchairRepository;
+import br.com.movie.repository.ArmchairModelRepository;
 import br.com.movie.repository.RoomRepository;
-import br.com.movie.repository.RowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,68 +24,38 @@ public class RoomService {
 
     @Autowired
     private RoomRepository roomRepository;
-
     @Autowired
-    private RowRepository rowRepository;
-
-    @Autowired
-    private ArmchairRepository armchairRepository;
+    private ArmchairModelRepository armchairModelRepository;
 
     @Transactional(readOnly = true)
     public List<Room> list() {
-        List<Room> rooms = roomRepository.findAll();
-        rooms.forEach(room -> Collections.sort(room.getRows()));
-
-        return rooms;
+        return roomRepository.findAll();
     }
 
     @Transactional
     public Room buildRoom(RoomSaveInput input) {
-        Room roomToSave = new Room();
-        roomToSave.setName(input.getName());
-        Room room = save(roomToSave);
+        Room room = save(new Room(input.getName()));
 
-        List<Row> rows = generateRows(input.getNumberOfRows());
+        List<String> letters = generateRowLetters(input.getNumberOfRows());
 
-        for (Row row: rows) {
-            List<Armchair> chairs = generateChairs(input.getArmchairPerRow(), row.getLetter());
-            row.setArmchairs(chairs);
+        for (String letter : letters) {
+            generateChairs(input.getArmchairPerRow(), letter, room.getId());
         }
 
-        room.setRows(rows);
-        roomRepository.save(room);
         return room;
+        // poderia retornar um RoomSaveOutput com lista de cadeiras junto
     }
 
     @Transactional(readOnly = true)
-    public List<Armchair> getArmchairsByRoomId(Integer roomId) {
-        Room room = findById(roomId);
-
-        List<Armchair> chairs = new ArrayList<>();
-
-        for (Row row: room.getRows()) {
-            chairs.addAll(row.getArmchairs());
-        }
-
-        return chairs;
+    public List<ArmchairModel> getArmchairsByRoomId(Integer roomId) {
+        return armchairModelRepository.findByRoomId(roomId);
     }
 
     @Transactional
-    public Room changeNumberArmchairsInRow(ChangeNumberArmchairsInRowInput input) {
-        Room room = findById(input.getRoomId());
-        room.getRows().removeIf(r -> input.getLetterRow().equals(r.getLetter()));
+    public List<ArmchairModel> changeNumberArmchairsInRow(ChangeNumberArmchairsInRowInput input) {
+        armchairModelRepository.deleteByRoomIdAndLetter(input.getRoomId(), input.getLetterRow());
 
-        Row row = Row.builder()
-                .letter(input.getLetterRow())
-                .armchairs(generateChairs(input.getNumberOfArmchairs(), input.getLetterRow()))
-                .build();
-
-        rowRepository.save(row);
-        room.getRows().add(row);
-        Room roomSaved = roomRepository.save(room);
-        Collections.sort(roomSaved.getRows());
-
-        return room;
+        return generateChairs(input.getNumberOfArmchairs(), input.getLetterRow(), input.getRoomId());
     }
 
     @Transactional(readOnly = true)
@@ -112,32 +79,29 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
-    private List<Row> generateRows(Integer numberOfRows) {
-        List<Row> rows = new ArrayList<>();
+    private List<String> generateRowLetters(Integer numberOfRows) {
+        List<String> rows = new ArrayList<>();
 
         for (int r = 0; r < numberOfRows; r++) {
-            Row row = new Row();
-            row.setLetter(ALPHABET.get(r));
-
-            rows.add(row);
+            rows.add(ALPHABET.get(r));
         }
 
-        rowRepository.saveAll(rows);
         return rows;
     }
 
-    private List<Armchair> generateChairs(Integer numberOfArmchairs, String letter) {
-        List<Armchair> chairs = new ArrayList<>();
+    private List<ArmchairModel> generateChairs(Integer numberOfArmchairsPerRow, String letter, Integer roomId) {
+        List<ArmchairModel> chairs = new ArrayList<>();
 
-        for (int a = 1; a <= numberOfArmchairs; a++) {
-            Armchair chair = new Armchair();
+        for (int a = 1; a <= numberOfArmchairsPerRow; a++) {
+            ArmchairModel chair = new ArmchairModel();
+            chair.setRoomId(roomId);
             chair.setLetter(letter);
             chair.setNumber(a);
 
             chairs.add(chair);
         }
 
-        armchairRepository.saveAll(chairs);
+        armchairModelRepository.saveAll(chairs);
         return chairs;
     }
 

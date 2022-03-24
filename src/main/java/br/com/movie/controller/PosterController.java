@@ -1,7 +1,7 @@
 package br.com.movie.controller;
 
 import br.com.movie.model.Poster;
-import br.com.movie.model.PosterArmchair;
+import br.com.movie.model.Armchair;
 import br.com.movie.model.dto.BookArmchairInput;
 import br.com.movie.model.dto.PosterSaveInput;
 import br.com.movie.model.dto.UnbookArmchairInput;
@@ -24,7 +24,7 @@ public class PosterController {
     private PosterService service;
 
     @GetMapping(path = "/getArmchairsByPosterId/{posterId}")
-    public ResponseEntity<List<PosterArmchair>> getArmchairsByPosterId(@PathVariable @NotNull Integer posterId) {
+    public ResponseEntity<List<Armchair>> getArmchairsByPosterId(@PathVariable @NotNull Integer posterId) {
         return ok(service.getArmchairsByPosterId(posterId));
     }
 
@@ -34,12 +34,12 @@ public class PosterController {
     }
 
     @PostMapping(path = "/bookArmchairs")
-    public ResponseEntity<List<PosterArmchair>> bookArmchairs(@RequestBody @Valid BookArmchairInput input) {
+    public ResponseEntity<List<Armchair>> bookArmchairs(@RequestBody @Valid BookArmchairInput input) {
         return ok(service.bookArmchairs(input));
     }
 
     @PostMapping(path = "/unbookArmchairs")
-    public ResponseEntity<List<PosterArmchair>> unbookArmchairs(@RequestBody @Valid UnbookArmchairInput input) {
+    public ResponseEntity<List<Armchair>> unbookArmchairs(@RequestBody @Valid UnbookArmchairInput input) {
         return ok(service.unbookArmchairs(input));
     }
 }

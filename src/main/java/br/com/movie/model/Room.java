@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
@@ -21,7 +20,8 @@ public class Room {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.REFRESH)
-    private List<Row> rows;
+    public Room(String name) {
+        this.name = name;
+    }
 
 }

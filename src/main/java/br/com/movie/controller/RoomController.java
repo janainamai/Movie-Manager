@@ -1,6 +1,6 @@
 package br.com.movie.controller;
 
-import br.com.movie.model.Armchair;
+import br.com.movie.model.ArmchairModel;
 import br.com.movie.model.Room;
 import br.com.movie.model.dto.ChangeNumberArmchairsInRowInput;
 import br.com.movie.model.dto.RoomSaveInput;
@@ -39,12 +39,12 @@ public class RoomController {
     }
 
     @GetMapping(path = "/getArmchairsByRoomId/{roomId}")
-    public ResponseEntity<List<Armchair>> getArmchairsByRoomId(@PathVariable @NotNull Integer roomId) {
+    public ResponseEntity<List<ArmchairModel>> getArmchairsByRoomId(@PathVariable @NotNull Integer roomId) {
         return ok(roomService.getArmchairsByRoomId(roomId));
     }
 
     @PostMapping("/changeNumberArmchairsInRow")
-    public ResponseEntity<Room> changeNumberArmchairsInRow(@RequestBody @Valid ChangeNumberArmchairsInRowInput input) {
+    public ResponseEntity<List<ArmchairModel>> changeNumberArmchairsInRow(@RequestBody @Valid ChangeNumberArmchairsInRowInput input) {
         return ok(roomService.changeNumberArmchairsInRow(input));
     }
 }
