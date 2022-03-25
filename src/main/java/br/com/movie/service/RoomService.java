@@ -53,14 +53,16 @@ public class RoomService {
 
     @Transactional(readOnly = true)
     public List<ArmchairModel> getArmchairsByRoomId(Integer roomId) {
-        return armchairModelRepository.findByRoomId(roomId);
+        return armchairModelRepository.findByRoomIdGroupByLetterNumber(roomId);
     }
 
     @Transactional
     public List<ArmchairModel> changeNumberArmchairsInRow(ChangeNumberArmchairsInRowInput input) {
         armchairModelRepository.deleteByRoomIdAndLetter(input.getRoomId(), input.getLetterRow());
 
-        return generateChairs(input.getNumberOfArmchairs(), input.getLetterRow(), input.getRoomId());
+        generateChairs(input.getNumberOfArmchairs(), input.getLetterRow(), input.getRoomId());
+
+        return getArmchairsByRoomId(input.getRoomId());
     }
 
     @Transactional(readOnly = true)

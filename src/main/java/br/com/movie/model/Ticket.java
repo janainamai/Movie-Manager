@@ -19,7 +19,7 @@ public class Ticket {
     private int id;
 
     @ManyToOne(cascade = REFRESH)
-    private Poster poster;
+    private Session session;
 
     @ManyToOne(cascade = REFRESH)
     private ArmchairModel armchair;

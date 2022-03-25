@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface ArmchairRepository extends JpaRepository<Armchair, Integer> {
 
-    @Query(value = "select * from poster_armchair " +
-                        "where poster_id = :posterId " +
+    @Query(value = "select * from armchair " +
+                        "where session_id = :sessionId " +
                         "order by letter_number", nativeQuery = true)
-    List<Armchair> findByPosterIdGroupByLetterNumber(@Param("posterId") Integer posterId);
+    List<Armchair> findBySessionIdGroupByLetterNumber(@Param("sessionId") Integer sessionId);
 
 }

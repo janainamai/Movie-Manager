@@ -1,12 +1,19 @@
-**ROOM** (sala de cinema), **ROW** (fileira de uma sala) e **ARMCHAIR** (poltrona de uma fileira)
+Movie-Manager (Gerenciador de cinema)
+
+**DETALHAMENTO DO SISTEMA**:
+
+**ROOM** (sala de cinema) e **ARMCHAIR_MODEL** (poltronas da sala de cinema)
 
 Cadastramos uma sala de cinema, informamos quantas fileiras existem e a quantidade 
 de poltronas por fileira. Com essas informações pré cadastradas, nossa sala e suas 
 respectivas poltronas são criadas para que o cliente escolha onde ele irá sentar para 
-assistir o filme desejado. 
+assistir o filme desejado.
 
 Após essa construção inicial da sala, é possível alterar a quantidade de cadeiras 
-de uma determinada fileira, determinando assim a planta exata da sala de cinema. 
+de uma determinada fileira, determinando assim a planta exata da sala de cinema.
+
+A entidade armchairModel é utilizada como um modelo para criar as poltronas de um
+poster.
 
 ```sql 
 Room
@@ -17,31 +24,23 @@ Room
 | name  | String  | NO   |     |
 +-------+---------+------+-----+
 
-Row
-+---------+---------+------+-----+
-| Field   | Type    | Null | Key |
-+---------+---------+------+-----+
-| id      | Integer | NO   | PRI |
-| letter  | String  | NO   |     |
-+---------+---------+------+-----+
-
-Armchair
+Armchair model
 +-----------+---------+------+-----+
 | Field     | Type    | Null | Key |
 +-----------+---------+------+-----+
 | id        | Integer | NO   | PRI |
+| room_id   | Integer | NO   |     |
 | letter    | String  | NO   |     |
 | number    | Integer | NO   |     |
-| available | boolean | NO   |     |
 +-----------+---------+------+-----+
 
 API disponível:
 
 - Listar salas
 - Consultar sala por nome
-- Salvar sala com fileiras e cadeiras
-- Consultar as cadeiras de uma sala de cinema por id
-- Alterar a quantidade de cadeiras da fileira de uma sala de cinema
+- Salvar sala e poltronas
+- Consultar as poltronas de uma sala de cinema por id
+- Alterar a quantidade de poltronas da fileira de uma sala de cinema
 
 ```
 
@@ -236,5 +235,43 @@ API disponível:
 
 - Listar
 - Alterar
+
+```
+
+<br>**SESSION** (sessão de filme) e **ARMCHAIR** (poltrona de uma sessão de filme)
+
+A sessão é um cartaz que informa ao cliente quando um determinado filme será apresentado,
+bem como dia, horário, sala, demais detalhes do filme e as poltronas disponíveis.
+
+Quando um cliente compra um ingresso para ver uma sessão de filme, este poderá escolher uma
+poltrona que está disponível, e quando o faz, esta passa a ficar indisponível.
+
+```sql
+Session
++------------+---------------+------+-----+
+| Field      | Type          | Null | Key |
++------------+---------------+------+-----+
+| id         | Integer       | NO   | PRI |
+| movie      | Movie         | NO   |     |
+| dateTime   | LocalDateTime | NO   |     |
+| room       | Room          | NO   |     |
++------------+---------------+------+-----+
+
+Armchair
++--------------+---------+------+-----+
+| Field        | Type    | Null | Key |
++--------------+---------+------+-----+
+| id           | Integer | NO   | PRI |
+| sessionId    | Integer | NO   |     |
+| letterNumber | String  | NO   |     |
+| available    | boolean | NO   |     |
++--------------+---------+------+-----+
+
+API disponível:
+
+- Consultar as poltronas de uma sessão
+- Salvar
+- Reservar uma poltrona
+- Liberar uma poltrona
 
 ```

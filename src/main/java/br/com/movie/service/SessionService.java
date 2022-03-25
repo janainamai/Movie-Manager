@@ -3,10 +3,10 @@ package br.com.movie.service;
 import br.com.movie.exception.BadRequestException;
 import br.com.movie.model.*;
 import br.com.movie.model.dto.BookArmchairInput;
-import br.com.movie.model.dto.PosterSaveInput;
+import br.com.movie.model.dto.SessionSaveInput;
 import br.com.movie.model.dto.UnbookArmchairInput;
 import br.com.movie.repository.ArmchairRepository;
-import br.com.movie.repository.PosterRepository;
+import br.com.movie.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,70 +17,70 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PosterService {
+public class SessionService {
 
     @Autowired
-    private PosterRepository posterRepository;
+    private SessionRepository SessionRepository;
     @Autowired
     private MovieService movieService;
     @Autowired
-    private ArmchairRepository posterArmchairRepository;
+    private ArmchairRepository armchairRepository;
     @Autowired
     private RoomService roomService;
 
     @Transactional
-    public List<Poster> save(PosterSaveInput input) {
-        List<Poster> posters = generatePosters(input);
-        generateArmchairs(posters);
+    public List<Session> save(SessionSaveInput input) {
+        List<Session> session = generateSessions(input);
+        generateArmchairs(session);
 
-        return posters;
+        return session;
     }
 
-    private List<Poster> generatePosters(PosterSaveInput input) {
-        List<Poster> posters = new ArrayList<>();
+    private List<Session> generateSessions(SessionSaveInput input) {
+        List<Session> sessions = new ArrayList<>();
         Room room = roomService.findById(input.getRoomId());
         Movie movie = movieService.findById(input.getMovieId());
 
         input.getDays().forEach(day -> {
             input.getHours().forEach(hour -> {
 
-                Poster poster = Poster.builder()
+                Session session = Session.builder()
                         .movie(movie)
                         .dateTime(LocalDateTime.of(day.toLocalDate(), hour.toLocalTime()))
                         .room(room)
                         .build();
 
-                posters.add(poster);
+                sessions.add(session);
 
             });
         });
 
-        return posterRepository.saveAll(posters);
+        return SessionRepository.saveAll(sessions);
     }
 
-    private void generateArmchairs(List<Poster> posters) {
-        List<Armchair> posterArmchairs = new ArrayList<>();
+    private void generateArmchairs(List<Session> sessions) {
+        List<Armchair> sessionArmchairs = new ArrayList<>();
 
-        posters.forEach(poster -> {
-            List<ArmchairModel> armchairsMold = roomService.getArmchairsByRoomId(poster.getRoom().getId());
+        sessions.forEach(session -> {
+            List<ArmchairModel> armchairsMold = roomService.getArmchairsByRoomId(session.getRoom().getId());
 
             List<Armchair> armchairs = armchairsMold.stream()
                     .map(chair -> Armchair.builder()
-                            .posterId(poster.getId())
+                            .sessionId(session.getId())
                             .letterNumber(chair.getLetter() + chair.getNumber())
                             .available(true)
                             .build())
                     .collect(Collectors.toList());
 
-            posterArmchairs.addAll(armchairs);
+            sessionArmchairs.addAll(armchairs);
         });
 
-        posterArmchairRepository.saveAll(posterArmchairs);
+        armchairRepository.saveAll(sessionArmchairs);
     }
 
     @Transactional(readOnly = true)
-    public List<Armchair> getArmchairsByPosterId(Integer posterId) {
-        return posterArmchairRepository.findByPosterIdGroupByLetterNumber(posterId);
+    public List<Armchair> getArmchairsBySessionId(Integer sessionId) {
+        return armchairRepository.findBySessionIdGroupByLetterNumber(sessionId);
     }
 
     @Transactional
@@ -88,7 +88,7 @@ public class PosterService {
         List<Armchair> armchairs = new ArrayList<>();
 
         input.getArmchairsId().forEach(id -> {
-            Armchair armchair = posterArmchairRepository.findById(id)
+            Armchair armchair = armchairRepository.findById(id)
                     .orElseThrow(() -> new BadRequestException("No room was found with id " + id));
 
             armchair.setAvailable(false);
@@ -96,8 +96,8 @@ public class PosterService {
             armchairs.add(armchair);
         });
 
-        posterArmchairRepository.saveAll(armchairs);
-        return posterArmchairRepository.findByPosterIdGroupByLetterNumber(input.getPosterId());
+        armchairRepository.saveAll(armchairs);
+        return armchairRepository.findBySessionIdGroupByLetterNumber(input.getSessionId());
     }
 
     @Transactional
@@ -105,7 +105,7 @@ public class PosterService {
         List<Armchair> armchairs = new ArrayList<>();
 
         input.getArmchairsId().forEach(id -> {
-            Armchair armchair = posterArmchairRepository.findById(id)
+            Armchair armchair = armchairRepository.findById(id)
                     .orElseThrow(() -> new BadRequestException("No room was found with id " + id));
 
             armchair.setAvailable(true);
@@ -113,8 +113,8 @@ public class PosterService {
             armchairs.add(armchair);
         });
 
-        posterArmchairRepository.saveAll(armchairs);
-        return posterArmchairRepository.findByPosterIdGroupByLetterNumber(input.getPosterId());
+        armchairRepository.saveAll(armchairs);
+        return armchairRepository.findBySessionIdGroupByLetterNumber(input.getSessionId());
     }
 
 }

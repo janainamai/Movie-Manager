@@ -9,8 +9,8 @@ import java.util.List;
 @Data
 public class BookArmchairInput {
 
-    @NotNull(message = "posterId cannot be null")
-    private Integer posterId;
+    @NotNull(message = "sessionId cannot be null")
+    private Integer sessionId;
 
     @NotEmpty(message = "at least one armchair id must be informed")
     private List<Integer> armchairsId;

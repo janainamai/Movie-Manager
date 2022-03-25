@@ -1,11 +1,11 @@
 package br.com.movie.controller;
 
-import br.com.movie.model.Poster;
+import br.com.movie.model.Session;
 import br.com.movie.model.Armchair;
 import br.com.movie.model.dto.BookArmchairInput;
-import br.com.movie.model.dto.PosterSaveInput;
+import br.com.movie.model.dto.SessionSaveInput;
 import br.com.movie.model.dto.UnbookArmchairInput;
-import br.com.movie.service.PosterService;
+import br.com.movie.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,19 +17,19 @@ import java.util.List;
 import static org.springframework.http.ResponseEntity.*;
 
 @RestController
-@RequestMapping("/poster")
-public class PosterController {
+@RequestMapping("/session")
+public class SessionController {
 
     @Autowired
-    private PosterService service;
+    private SessionService service;
 
-    @GetMapping(path = "/getArmchairsByPosterId/{posterId}")
-    public ResponseEntity<List<Armchair>> getArmchairsByPosterId(@PathVariable @NotNull Integer posterId) {
-        return ok(service.getArmchairsByPosterId(posterId));
+    @GetMapping(path = "/getArmchairsBySessionId/{sessionId}")
+    public ResponseEntity<List<Armchair>> getArmchairsBySessionId(@PathVariable @NotNull Integer sessionId) {
+        return ok(service.getArmchairsBySessionId(sessionId));
     }
 
     @PostMapping(path = "/save")
-    public ResponseEntity<List<Poster>> save(@RequestBody @Valid PosterSaveInput input) {
+    public ResponseEntity<List<Session>> save(@RequestBody @Valid SessionSaveInput input) {
         return ok(service.save(input));
     }
 

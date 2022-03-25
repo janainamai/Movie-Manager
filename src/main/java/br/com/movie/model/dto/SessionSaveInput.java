@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class PosterSaveInput {
+public class SessionSaveInput {
 
     @NotNull(message = "movieId cannot be null")
     private Integer movieId;

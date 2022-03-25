@@ -21,7 +21,7 @@ public class Armchair {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer posterId;
+    private Integer sessionId;
 
     private String letterNumber;
 
