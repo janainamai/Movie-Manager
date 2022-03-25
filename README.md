@@ -12,8 +12,8 @@ assistir o filme desejado.
 Após essa construção inicial da sala, é possível alterar a quantidade de cadeiras 
 de uma determinada fileira, determinando assim a planta exata da sala de cinema.
 
-A entidade armchairModel é utilizada como um modelo para criar as poltronas de um
-poster.
+A entidade armchairModel é utilizada como um modelo para criar as poltronas de uma
+session.
 
 ```sql 
 Room
@@ -93,8 +93,7 @@ API disponível:
 <br>**MOVIE** (filme)
 
 O filme possui características de 'title', 'synopsis', 'category',
-'minimumAgeRequired', 'language', 'durationMinutes', 'type' e 'isOnActivePoster'
-que serão exibidas no cartaz quando este filme estiver disponível em uma sessão.
+'minimumAgeRequired', 'language', 'durationMinutes' e 'type' que serão exibidas no cartaz quando este filme estiver disponível em uma sessão.
 
 ```sql
 Movie
