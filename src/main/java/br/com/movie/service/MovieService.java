@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class MovieService {
 
@@ -19,7 +22,10 @@ public class MovieService {
 
     @Transactional(readOnly = true)
     public List<Movie> list() {
-        return movieRepository.findAll();
+        return movieRepository.findAll()
+                .stream()
+                .sorted(comparing(Movie::getTitle))
+                .collect(toList());
     }
 
     @Transactional(readOnly = true)
@@ -29,7 +35,7 @@ public class MovieService {
     }
 
     @Transactional(readOnly = true)
-    public List<Movie> findByTitleContainingIgnoreCase(String title) {
+    public List<Movie> findByTitle(String title) {
         List<Movie> list = movieRepository.findByTitleContainingIgnoreCase(title);
 
         if (list.isEmpty()) {
@@ -74,10 +80,7 @@ public class MovieService {
         if (list.isEmpty()) {
             return true;
         } else {
-            if (hasSameLanguageAndMovieType(movie, list)) {
-                return false;
-            }
-            return true;
+            return !hasSameLanguageAndMovieType(movie, list);
         }
     }
 

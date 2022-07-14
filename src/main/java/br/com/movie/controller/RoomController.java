@@ -15,7 +15,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-import static org.springframework.http.ResponseEntity.*;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/room")
@@ -29,9 +29,9 @@ public class RoomController {
         return ok(roomService.list());
     }
 
-    @GetMapping(path = "/findByNameContainingIgnoreCase/{name}")
-    public ResponseEntity<List<Room>> findByNameContainingIgnoreCase(@PathVariable @NotEmpty String name) {
-        return ok(roomService.findByNameContainingIgnoreCase(name));
+    @GetMapping(path = "/findByName/{name}")
+    public ResponseEntity<List<Room>> findByName(@PathVariable @NotEmpty String name) {
+        return ok(roomService.findByName(name));
     }
 
     @PostMapping("/save")

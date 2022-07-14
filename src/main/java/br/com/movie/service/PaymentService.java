@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class PaymentService {
 
@@ -18,10 +21,13 @@ public class PaymentService {
     private PaymentRepository paymentRepository;
 
     public List<Payment> list() {
-        return paymentRepository.findAll();
+        return paymentRepository.findAll()
+                .stream()
+                .sorted(comparing(Payment::getDescription))
+                .collect(toList());
     }
 
-    public List<Payment> findByDescriptionContainingIgnoreCase(String description) {
+    public List<Payment> findByDescription(String description) {
         return paymentRepository.findByDescriptionContainingIgnoreCase(description)
                 .orElseThrow(() -> new BadRequestException(PAYMENT_NOT_FOUND));
     }

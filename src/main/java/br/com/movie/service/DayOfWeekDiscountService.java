@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class DayOfWeekDiscountService {
 
@@ -20,7 +23,10 @@ public class DayOfWeekDiscountService {
     private static final String DAYOFWEEK_NOT_FOUND = "Day of week discount not found";
 
     public List<DayOfWeekDiscount> list() {
-        return repository.findAll();
+        return repository.findAll()
+                .stream()
+                .sorted(comparing(DayOfWeekDiscount::getCode))
+                .collect(toList());
     }
 
     public DayOfWeekDiscount getTodaysDiscount() {

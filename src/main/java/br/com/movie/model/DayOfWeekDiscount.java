@@ -21,6 +21,8 @@ public class DayOfWeekDiscount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private Integer code;
+
     private String dayOfWeek;
 
     private Double percentage;

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class CategoryService {
 
@@ -18,10 +21,13 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     public List<Category> list() {
-        return categoryRepository.findAll();
+        return categoryRepository.findAll()
+                .stream()
+                .sorted(comparing(Category::getDescription))
+                .collect(toList());
     }
 
-    public List<Category> findByDescriptionContainingIgnoreCase(String description) {
+    public List<Category> findByDescription(String description) {
         return categoryRepository.findByDescriptionContainingIgnoreCase(description)
                 .orElseThrow(() -> new BadRequestException(CATEGORY_NOT_FOUND));
     }

@@ -204,7 +204,6 @@ API disponível:
 - Consultar descontos ativos
 - Salvar
 - Alterar
-- Deletar por id
 
 ```
 
@@ -225,6 +224,7 @@ DayOfWeekDiscount
 | Field      | Type    | Null | Key |
 +------------+---------+------+-----+
 | id         | Integer | NO   | PRI |
+| code       | Integer | NO   |     |
 | dayOfWeek  | String  | NO   |     |
 | active     | Boolean | NO   |     |
 | percentage | Double  | NO   |     |

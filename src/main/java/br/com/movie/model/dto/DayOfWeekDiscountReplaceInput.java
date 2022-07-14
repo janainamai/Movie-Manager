@@ -12,6 +12,9 @@ public class DayOfWeekDiscountReplaceInput implements ConvertDTO<DayOfWeekDiscou
     @NotNull(message = "id cannot be null")
     private Integer id;
 
+    @NotNull(message = "code cannot be null")
+    private Integer code;
+
     @NotNull(message = "dayOfWeek cannot be null")
     @NotEmpty(message = "dayOfWeek cannot be empty")
     private String dayOfWeek;
@@ -26,6 +29,7 @@ public class DayOfWeekDiscountReplaceInput implements ConvertDTO<DayOfWeekDiscou
     public DayOfWeekDiscount toEntity() {
         return DayOfWeekDiscount.builder()
                 .id(id)
+                .code(code)
                 .dayOfWeek(dayOfWeek)
                 .active(active)
                 .percentage(percentage)

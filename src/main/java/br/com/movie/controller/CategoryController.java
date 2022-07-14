@@ -1,8 +1,8 @@
 package br.com.movie.controller;
 
-import br.com.movie.model.dto.CategorySaveInput;
-import br.com.movie.model.dto.CategoryReplaceInput;
 import br.com.movie.model.Category;
+import br.com.movie.model.dto.CategoryReplaceInput;
+import br.com.movie.model.dto.CategorySaveInput;
 import br.com.movie.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +24,9 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.list());
     }
 
-    @GetMapping("/findByDescriptionContainingIgnoreCase/{description}")
-    public ResponseEntity<List<Category>> findByDescriptionContainingIgnoreCase(@PathVariable String description) {
-        return ResponseEntity.ok(categoryService.findByDescriptionContainingIgnoreCase(description));
+    @GetMapping("/findByDescription/{description}")
+    public ResponseEntity<List<Category>> findByDescription(@PathVariable String description) {
+        return ResponseEntity.ok(categoryService.findByDescription(description));
     }
 
     @PostMapping(path = "/save")

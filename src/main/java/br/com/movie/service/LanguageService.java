@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class LanguageService {
 
@@ -18,10 +21,13 @@ public class LanguageService {
     private LanguageRepository languageRepository;
 
     public List<Language> list() {
-        return languageRepository.findAll();
+        return languageRepository.findAll()
+                .stream()
+                .sorted(comparing(Language::getDescription))
+                .collect(toList());
     }
 
-    public List<Language> findByDescriptionContainingIgnoreCase(String description) {
+    public List<Language> findByDescription(String description) {
         return languageRepository.findByDescriptionContainingIgnoreCase(description)
                 .orElseThrow(() -> new BadRequestException(LANGUAGE_NOT_FOUND));
     }

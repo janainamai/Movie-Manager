@@ -1,8 +1,8 @@
 package br.com.movie.controller;
 
 import br.com.movie.model.Movie;
-import br.com.movie.model.dto.MovieSaveInput;
 import br.com.movie.model.dto.MovieReplaceInput;
+import br.com.movie.model.dto.MovieSaveInput;
 import br.com.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static org.springframework.http.ResponseEntity.*;
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/movie")
@@ -26,9 +26,9 @@ public class MovieController {
         return ok(movieService.list());
     }
 
-    @GetMapping(path = "/findByTitleContainingIgnoreCase/{title}")
-    public ResponseEntity<List<Movie>> findByTitleContainingIgnoreCase(@PathVariable String title) {
-        return ok(movieService.findByTitleContainingIgnoreCase(title));
+    @GetMapping(path = "/findByTitle/{title}")
+    public ResponseEntity<List<Movie>> findByTitle(@PathVariable String title) {
+        return ok(movieService.findByTitle(title));
     }
 
     @PostMapping(path = "/save")

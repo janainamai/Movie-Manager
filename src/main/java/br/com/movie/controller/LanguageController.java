@@ -1,8 +1,8 @@
 package br.com.movie.controller;
 
-import br.com.movie.model.dto.LanguageSaveInput;
-import br.com.movie.model.dto.LanguageReplaceInput;
 import br.com.movie.model.Language;
+import br.com.movie.model.dto.LanguageReplaceInput;
+import br.com.movie.model.dto.LanguageSaveInput;
 import br.com.movie.service.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +24,9 @@ public class LanguageController {
         return ResponseEntity.ok(languageService.list());
     }
 
-    @GetMapping("/findByDescriptionContainingIgnoreCase/{description}")
-    public ResponseEntity<List<Language>> findByDescriptionContainingIgnoreCase(@PathVariable String description) {
-        return ResponseEntity.ok(languageService.findByDescriptionContainingIgnoreCase(description));
+    @GetMapping("/findByDescription/{description}")
+    public ResponseEntity<List<Language>> findByDescription(@PathVariable String description) {
+        return ResponseEntity.ok(languageService.findByDescription(description));
     }
 
     @PostMapping(path = "/save")

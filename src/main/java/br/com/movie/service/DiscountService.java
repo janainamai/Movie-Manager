@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class DiscountService {
 
@@ -18,10 +21,13 @@ public class DiscountService {
     private static final String DISCOUNT_NOT_FOUND = "Discount not found";
 
     public List<Discount> list() {
-        return repository.findAll();
+        return repository.findAll()
+                .stream()
+                .sorted(comparing(Discount::getDescription))
+                .collect(toList());
     }
 
-    public List<Discount> findByDescriptionContainingIgnoreCase(String description) {
+    public List<Discount> findByDescription(String description) {
         Optional<List<Discount>> optional = repository.findByDescriptionContainingIgnoreCase(description);
         if (optional.isEmpty()) {
             throw new BadRequestException(DISCOUNT_NOT_FOUND);
@@ -53,14 +59,6 @@ public class DiscountService {
     public Discount replace(Discount discount) {
         if (repository.existsById(discount.getId()) && isValidToReplace(discount)) {
             return repository.save(discount);
-        } else {
-            throw new BadRequestException(DISCOUNT_NOT_FOUND);
-        }
-    }
-
-    public void deleteById(Integer id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
         } else {
             throw new BadRequestException(DISCOUNT_NOT_FOUND);
         }

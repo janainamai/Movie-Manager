@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static br.com.movie.common.Constants.ALPHABET;
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class RoomService {
@@ -30,7 +32,10 @@ public class RoomService {
 
     @Transactional(readOnly = true)
     public List<Room> list() {
-        return roomRepository.findAll();
+        return roomRepository.findAll()
+                .stream()
+                .sorted(comparing(Room::getName))
+                .collect(toList());
     }
 
     @Transactional
@@ -66,7 +71,7 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public List<Room> findByNameContainingIgnoreCase(String name) {
+    public List<Room> findByName(String name) {
         return roomRepository.findByNameContainingIgnoreCase(name)
                 .orElseThrow(() -> new BadRequestException(ROOM_NOT_FOUND));
     }
